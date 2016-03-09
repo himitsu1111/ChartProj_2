@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2016.03.09 07:58:53.810.cpp,C:\Documents\RAD Studio\Projects\Unit1.cpp=C:\mur\CPP\ChartProj_2\Unit1.cpp</Transaction>
+    <Transaction>2016.03.09 07:58:53.810.h,C:\Documents\RAD Studio\Projects\Unit1.h=C:\mur\CPP\ChartProj_2\Unit1.h</Transaction>
+    <Transaction>2016.03.09 07:58:53.810.dfm,C:\Documents\RAD Studio\Projects\Unit1.dfm=C:\mur\CPP\ChartProj_2\Unit1.dfm</Transaction>
+    <Transaction>2016.03.09 07:58:55.235.cbproj,C:\Documents\RAD Studio\Projects\Project1.cbproj=C:\mur\CPP\ChartProj_2\Project1.cbproj</Transaction>
+    <Transaction>2016.03.09 09:27:29.636.cpp,C:\mur\CPP\ChartProj_2\File1.cpp=C:\mur\CPP\ChartProj_2\Support.cpp</Transaction>
+  </Transactions>
+</BorlandProject>
