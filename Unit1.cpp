@@ -28,7 +28,7 @@ TStringList* ListFiles(const String &DirName)
 	if (!FindFirst(DirName+"\\*.*", faAnyFile, sr))
 		do
 		{
-			if (!(sr.Name == "." || sr.Name == ".."))//это показывать не надо
+			if (!(sr.Name == "." || sr.Name == ".." || sr.Name.Pos("~$")))//это показывать не надо
 			if (sr.Attr & faDirectory)// найдена папка
 			{
 				/*ListFiles*/ List->Add(/*DirName+"\\" +*/ sr.Name);//, List);//вызывает сама себя для поиска в подпапках
@@ -76,12 +76,13 @@ void __fastcall TForm1::ComboBox2Change(TObject *Sender)
 	String Path = "C:\\676\\" + ComboBox1->Items->Strings[ComboBox1->ItemIndex] +
 				  + "\\" + ComboBox2->Items->Strings[ComboBox2->ItemIndex];
 	List = ListFiles(Path);
+	int z = List->Count;
     for (int i = 0; i < List->Count; i++)
 		ListOfFiles->Add("C:\\676\\" + ComboBox1->Items->Strings[ComboBox1->ItemIndex] +
 				  + "\\" + ComboBox2->Items->Strings[ComboBox2->ItemIndex] + "\\" + List->Strings[i]);
 	Memo1->Lines->Add(ListOfFiles->Text);
 	
-	Obj->setPathList(ListOfFiles);
+   	Obj->setPathList(ListOfFiles);
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::Button1Click(TObject *Sender)

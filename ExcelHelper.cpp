@@ -44,7 +44,7 @@ XlsHelper::XlsHelper()
 }
 XlsHelper::~XlsHelper()
 {
-   //	delete XlsApp;
+   	delete XlsApp;
 	delete XlsBook;
 	delete XlsSheet;
 }
@@ -53,9 +53,11 @@ void XlsHelper::MakeMas(AnsiString PathToFile)
    //	delete XlsApp;
 	XlsApp = new TExcelApplication(NULL);
 	XlsApp->Visible[0] = false;
+	String Str = PathToFile.SubString(0, PathToFile.Length()-2);
+	XlsApp->Workbooks->Open(WideString(PathToFile.SubString(0, PathToFile.Length()-2)));//"c:\\676\\Chiron FZ15W\\0120272323\\2_СВС_03.06.13.xlsx"));
 
-	XlsApp->Workbooks->Open(WideString("c:\\676\\Chiron FZ15W\\0120272323\\2_СВС_03.06.13.xlsx"));
-//	for (int i = 13; i < 815; i++)
+	//XlsApp->Range->Find()
+	//	for (int i = 13; i < 815; i++)
 //	{
 
 	   Variant A = XlsApp->Range[Variant("A" + IntToStr(14))]->get_Value(); //перебор левого столбца
