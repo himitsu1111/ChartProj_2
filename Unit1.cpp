@@ -123,7 +123,8 @@ void __fastcall TForm1::ComboBox3Change(TObject *Sender)
 
 void __fastcall TForm1::Button3Click(TObject *Sender)
 {
-	Memo1->Text = Obj->getDiagnObj();	
+	Memo1->Text = Obj->getDiagnObj();
+	
 }
 //---------------------------------------------------------------------------
 

@@ -39,7 +39,7 @@ namespace moo
 		String getRanges() {return Ranges;};
 
 		void setDiagnObj(String a) { DiagnObj = a; };
-		String getDiagnObj() {return DiagnObj;};
+		String getDiagnObj() { Calculating(); return DiagnObj;};
 
 		void setPathList(TStringList* a) { PathList = a; };
 		TStringList* getPathList() {return PathList;};
@@ -69,7 +69,7 @@ namespace moo
 			M->MakeMas(list->Text);
 			
 		}
-		DiagnObj = M->getColumnLeft();
+		DiagnObj = FloatToStr(M->getC());
 	  // 	DateList = list;
 	}
 }

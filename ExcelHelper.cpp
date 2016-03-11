@@ -1,7 +1,11 @@
+
+
+#include <vcl.h>
+#include <vector>
 #include "Excel_XP_srvr.h"
 #include <OleServer.hpp>
 #include "excel_xp_srvr.h"
-#include <vector>
+
 
 #pragma link "Excel_XP_srvr"
 #pragma link "excel_xp_srvr"
@@ -14,6 +18,7 @@ class XlsHelper
 	String RangeLeft;
 	String RangeRight;
 	std::vector<float> ColumnLeft;
+	float C;
  //   std::vector<float> ColumnRight;
 
 
@@ -21,47 +26,44 @@ class XlsHelper
 	XlsHelper();
 	~XlsHelper();
 	void MakeMas(AnsiString);
-	String getColumnLeft()
+	float getC()
 	{
-		String Z = "";
-		for (std::vector<float>::iterator it = ColumnLeft.begin(); it != ColumnLeft.end(); ++it)
-			Z = Z + FloatToStr(*it);
+
 			
-		return Z;
+		return C;
 	}
 };
 XlsHelper::XlsHelper()
 {
-	RangeLeft = "A";
-    RangeRight = "B";
-	XlsApp = NULL;
-	XlsBook = NULL;
-	XlsSheet = NULL;
+//	RangeLeft = "A";
+//	RangeRight = "B";
+//	XlsApp = NULL;
+//	XlsBook = NULL;
+//	XlsSheet = NULL;
 	//XlsApp->Range->get_Range()->get_value()
 }
 XlsHelper::~XlsHelper()
 {
-	delete XlsApp;
+   //	delete XlsApp;
 	delete XlsBook;
 	delete XlsSheet;
 }
 void XlsHelper::MakeMas(AnsiString PathToFile)
 {
-	wchar_t wstr[50];
-	delete XlsApp;
+   //	delete XlsApp;
 	XlsApp = new TExcelApplication(NULL);
 	XlsApp->Visible[0] = false;
-	PathToFile.WideChar(wstr, 50);
-	XlsApp->Workbooks->Open(PathToFile.WideChar(wstr, 50));
-	for (int i = 13; i < 815; i++)
-	{
 
-	   Variant A = XlsApp->Range[Variant(RangeLeft + IntToStr(i))]->get_Value(); //ןונובמנ כוגמדמ סעמכבצא
-	   Variant B = XlsApp->Range[Variant(RangeRight + IntToStr(i))]->get_Value();//ןונובמנ ןנאגמדמ סעמכבצא
-       float C = A;
-	   ColumnLeft.push_back(C);
+	XlsApp->Workbooks->Open(WideString("c:\\676\\Chiron FZ15W\\0120272323\\2_ÑÂÑ_03.06.13.xlsx"));
+//	for (int i = 13; i < 815; i++)
+//	{
+
+	   Variant A = XlsApp->Range[Variant("A" + IntToStr(14))]->get_Value(); //ןונובמנ כוגמדמ סעמכבצא
+//	   Variant B = XlsApp->Range[Variant(RangeRight + IntToStr(i))]->get_Value();//ןונובמנ ןנאגמדמ סעמכבצא
+	   C = A;
+//	   ColumnLeft.push_back(C);
 
 
-	}
+//	}
 		
 }
