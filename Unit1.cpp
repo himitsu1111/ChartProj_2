@@ -67,7 +67,7 @@ void __fastcall TForm1::ComboBox1Change(TObject *Sender)
 	ComboBox2->Clear();
 	for (int i = 0; i < List->Count; i++)
 		ComboBox2->Items->Add(List->Strings[i]);
-}
+}    
 //---------------------------------------------------------------------------
 void __fastcall TForm1::ComboBox2Change(TObject *Sender)
 {
@@ -77,7 +77,8 @@ void __fastcall TForm1::ComboBox2Change(TObject *Sender)
 				  + "\\" + ComboBox2->Items->Strings[ComboBox2->ItemIndex];
 	List = ListFiles(Path);
     for (int i = 0; i < List->Count; i++)
-		ListOfFiles->Add(List->Strings[i]);
+		ListOfFiles->Add("C:\\676\\" + ComboBox1->Items->Strings[ComboBox1->ItemIndex] +
+				  + "\\" + ComboBox2->Items->Strings[ComboBox2->ItemIndex] + List->Strings[i]);
 	Memo1->Lines->Add(ListOfFiles->Text);
 	
 	Obj->setPathList(ListOfFiles);
@@ -95,10 +96,28 @@ void __fastcall TForm1::Button1Click(TObject *Sender)
 	//Obj->setChannel("asdasd");
 	//Memo1->Text = Obj->getChannel();
 	//Obj->setChannel("test");
-	Obj->setChannel("rat");
+  //	Obj->setChannel("test");
 	Memo1->Text = Obj->getPathList()->Text;
 
 
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button2Click(TObject *Sender)
+{
+    Memo1->Text = Obj->getDateList()->Text;	
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::RadioGroup1Click(TObject *Sender)
+{
+	Obj->setChannel(IntToStr(RadioGroup1->ItemIndex+1));	
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::ComboBox3Change(TObject *Sender)
+{
+	Obj->setRanges(ComboBox3->Text);
 }
 //---------------------------------------------------------------------------
 

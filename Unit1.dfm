@@ -32,10 +32,10 @@ object Form1: TForm1
     TabOrder = 1
   end
   object Memo1: TMemo
-    Left = 499
+    Left = 479
     Top = 8
-    Width = 178
-    Height = 233
+    Width = 198
+    Height = 457
     Lines.Strings = (
       'Memo1')
     TabOrder = 2
@@ -61,10 +61,49 @@ object Form1: TForm1
   object Button1: TButton
     Left = 24
     Top = 160
-    Width = 75
+    Width = 57
     Height = 25
     Caption = 'Button1'
     TabOrder = 5
     OnClick = Button1Click
+  end
+  object Button2: TButton
+    Left = 121
+    Top = 160
+    Width = 48
+    Height = 25
+    Caption = 'Button2'
+    TabOrder = 6
+    OnClick = Button2Click
+  end
+  object ComboBox3: TComboBox
+    Left = 192
+    Top = 104
+    Width = 145
+    Height = 21
+    Style = csDropDownList
+    ItemHeight = 13
+    TabOrder = 7
+    OnChange = ComboBox3Change
+    Items.Strings = (
+      #1057#1042#1057
+      #1057#1042#1059
+      #1057#1054)
+  end
+  object RadioGroup1: TRadioGroup
+    Left = 192
+    Top = 24
+    Width = 225
+    Height = 57
+    Caption = 'RadioGroup1'
+    Columns = 5
+    Items.Strings = (
+      '1'
+      '2'
+      '3'
+      '4'
+      '5')
+    TabOrder = 8
+    OnClick = RadioGroup1Click
   end
 end

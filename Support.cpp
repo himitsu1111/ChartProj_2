@@ -1,5 +1,6 @@
 #include <vcl.h>
 #include <vector>
+#include "ExcelHelper.cpp"
 namespace moo
 {
 	struct PointForChart
@@ -14,7 +15,7 @@ namespace moo
 	{
 		private:
 		static String Channel; //канал
-		String Ranges;  //свс сву со
+		static String Ranges;  //свс сву со
 		String DiagnObj; //объект диагностики
 		std::vector<int> Mass; //массив тех самых 800 значений
 		std::vector<PointForChart> ListOfPoints; //массив структур вида (число; число; дата) 7 штук!
@@ -30,10 +31,10 @@ namespace moo
 
 		~ParserInterface() {};
 
-		void setChannel(String a) { Channel = a; };
+		void setChannel(String a) { Channel = a + "_"; };
 		static String getChannel() {return Channel;};
 
-		void setRanges(String a) { Ranges = a; };
+		void setRanges(String a) { Ranges = "_" + a + "_"; };
 		String getRanges() {return Ranges;};
 
 		void setDiagnObj(String a) { DiagnObj = a; };
@@ -42,25 +43,30 @@ namespace moo
 		void setPathList(TStringList* a) { PathList = a; };
 		TStringList* getPathList() {return PathList;};
 
-		TStringList* getDateList() { return DateList; }; 
+		TStringList* getDateList() { Calculating(); return DateList; }; 
 
 
 
 	};
-	String ParserInterface::Channel = "test";
-	ParserInterface::ParserInterface() : Ranges(0), Mass(0) {}
-	ParserInterface::ParserInterface(TStringList* Path) : Ranges(0), Mass(0) { PathList = Path; }
+	String ParserInterface::Channel = "2_";
+    String ParserInterface::Ranges = "_СВС_";
+	ParserInterface::ParserInterface() : Mass(0) {}
+	ParserInterface::ParserInterface(TStringList* Path) : Mass(0) { PathList = Path; }
 
 	void ParserInterface::Calculating()
 	{
-		TStringList * list;
+		TStringList * list = new TStringList();
+
 		for (int i = 0; i < PathList->Count; i++)
 		{
 			if ((PathList->Strings[i].Pos(Channel)) && (PathList->Strings[i].Pos(Ranges)) )
-				list->Add(PathList->Strings[i]);
-
-				
-
+				list->Add(PathList->Strings[i]); //отсортировываем необходимые файлы по
+												 //номеру канала и СВС'ам
+								//получаем список файлов, которые необходимо обработать
+			XlsHelper* M = new XlsHelper;
+			//M->
 		}
+
+	   	DateList = list; //пути без // перед именем файла. надо исправить!!
 	}
 }
