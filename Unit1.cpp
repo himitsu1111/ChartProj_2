@@ -78,7 +78,7 @@ void __fastcall TForm1::ComboBox2Change(TObject *Sender)
 	List = ListFiles(Path);
     for (int i = 0; i < List->Count; i++)
 		ListOfFiles->Add("C:\\676\\" + ComboBox1->Items->Strings[ComboBox1->ItemIndex] +
-				  + "\\" + ComboBox2->Items->Strings[ComboBox2->ItemIndex] + List->Strings[i]);
+				  + "\\" + ComboBox2->Items->Strings[ComboBox2->ItemIndex] + "\\" + List->Strings[i]);
 	Memo1->Lines->Add(ListOfFiles->Text);
 	
 	Obj->setPathList(ListOfFiles);
@@ -118,6 +118,12 @@ void __fastcall TForm1::RadioGroup1Click(TObject *Sender)
 void __fastcall TForm1::ComboBox3Change(TObject *Sender)
 {
 	Obj->setRanges(ComboBox3->Text);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button3Click(TObject *Sender)
+{
+	Memo1->Text = Obj->getDiagnObj();	
 }
 //---------------------------------------------------------------------------
 

@@ -21,6 +21,7 @@ namespace moo
 		std::vector<PointForChart> ListOfPoints; //массив структур вида (число; число; дата) 7 штук!
 		TStringList * DateList; //список дат (на всякий случай, потом возможно не пригодится)
 		TStringList * PathList; //входящий список путей к файлам
+		XlsHelper* M;
 
 		void Calculating(); //расчет и парсинг файлов экселя,
 							//и создание списка структур с координатами (значение - дата)
@@ -55,6 +56,7 @@ namespace moo
 
 	void ParserInterface::Calculating()
 	{
+		M = new XlsHelper;
 		TStringList * list = new TStringList();
 
 		for (int i = 0; i < PathList->Count; i++)
@@ -63,10 +65,11 @@ namespace moo
 				list->Add(PathList->Strings[i]); //отсортировываем необходимые файлы по
 												 //номеру канала и СВС'ам
 								//получаем список файлов, которые необходимо обработать
-			XlsHelper* M = new XlsHelper;
-			//M->test
+			
+			M->MakeMas(list->Text);
+			
 		}
-
-	   	DateList = list; //пути без // перед именем файла. надо исправить!!
+		DiagnObj = M->getColumnLeft();
+	  // 	DateList = list;
 	}
 }
