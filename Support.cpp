@@ -5,11 +5,12 @@ namespace moo
 {
 	struct PointForChart
 	{
-		float A; //значение, по которому происходит поиск
 		float B; //значение, которое выбирается соответственно найденному
-		String Date; //дата замера, указанная в названии файла, либо внутри файла
-
+		AnsiString Date; //дата замера, указанная в названии файла, либо внутри файла
+//		PointForChart() { B = NULL; Date = NULL; };
+//		~PointForChart();
 	};
+
 
 	class ParserInterface
 	{
@@ -23,8 +24,12 @@ namespace moo
 		TStringList * PathList; //входящий список путей к файлам
 		XlsHelper* M;
 
+		int SV;
+
 		void Calculating(); //расчет и парсинг файлов экселя,
 							//и создание списка структур с координатами (значение - дата)
+		void CalcDiagnParam(); //пересчет массива из 7 значений по одной из 6 формул,
+								//в зав-ти от объекта диагностики
 
 		public:
 		ParserInterface();
@@ -44,9 +49,9 @@ namespace moo
 		void setPathList(TStringList* a) { PathList = a; };
 		TStringList* getPathList() {return PathList;};
 
-		TStringList* getDateList() { Calculating(); return DateList; }; 
+		TStringList* getDateList() { Calculating(); return DateList; };
 
-
+		int getSV() { Calculating(); return SV; } ;
 
 	};
 	String ParserInterface::Channel = "2_";
@@ -58,18 +63,26 @@ namespace moo
 	{
 		M = new XlsHelper;
 		TStringList * list = new TStringList();
-
+        PointForChart PFC;
 		for (int i = 0; i < PathList->Count; i++)
 		{
 			if ((PathList->Strings[i].Pos(Channel)) && (PathList->Strings[i].Pos(Ranges)) )
 				list->Add(PathList->Strings[i]); //отсортировываем необходимые файлы по
 												 //номеру канала и СВС'ам
 								//получаем список файлов, которые необходимо обработать
-			
-			M->MakeMas(list->Text);
-			
+			std::vector<float> counting = M->MakeMas(list->Text);
+                //получается диапазон значений, из которых нужно выбрать среднее
+
+
+			for (int j = 0; j < counting.size(); j++)
+			{
+				PFC.B = counting[i];
+				PFC.Date = "12.12.12";
+				ListOfPoints.push_back(PFC);
+			}
 		}
-		DiagnObj = FloatToStr(M->getC());
+	   //	DiagnObj = FloatToStr(M->getC());
 	  // 	DateList = list;
+      	delete M;
 	}
 }
