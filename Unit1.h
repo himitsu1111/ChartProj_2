@@ -25,6 +25,7 @@ __published:	// IDE-managed Components
 	TComboBox *ComboBox3;
 	TRadioGroup *RadioGroup1;
 	TButton *Button3;
+	TComboBox *ComboBox4;
 	void __fastcall FormCreate(TObject *Sender);
 	void __fastcall ComboBox1Change(TObject *Sender);
 	void __fastcall ComboBox2Change(TObject *Sender);
@@ -33,6 +34,7 @@ __published:	// IDE-managed Components
 	void __fastcall RadioGroup1Click(TObject *Sender);
 	void __fastcall ComboBox3Change(TObject *Sender);
 	void __fastcall Button3Click(TObject *Sender);
+	void __fastcall ComboBox4Change(TObject *Sender);
 private:	// User declarations
 public:		// User declarations
 	__fastcall TForm1(TComponent* Owner);

@@ -54,8 +54,6 @@ void __fastcall TForm1::FormCreate(TObject *Sender)
 		ComboBox1->Items->Add(List->Strings[i]);
 
 	Memo1->Lines->Add(List->Text);
-
-		
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::ComboBox1Change(TObject *Sender)
@@ -124,8 +122,19 @@ void __fastcall TForm1::ComboBox3Change(TObject *Sender)
 
 void __fastcall TForm1::Button3Click(TObject *Sender)
 {
-	Memo1->Text = Obj->getSV();
+
+   //	Memo1->Text = Obj->getCoordinates()[0].Date;
+	std::vector<moo::PointForChart> VPFC = Obj->getCoordinates();
+	for (int i = 0; i < VPFC.size(); i++)
+        Memo1->Lines[i].Text = VPFC[i].Date;
 	
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::ComboBox4Change(TObject *Sender)
+{
+	Obj->setMassFreq(111.);
+	Obj->setDiagnObj(ComboBox4->Text);
 }
 //---------------------------------------------------------------------------
 

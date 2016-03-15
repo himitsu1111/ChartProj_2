@@ -78,12 +78,12 @@ object Form1: TForm1
   end
   object ComboBox3: TComboBox
     Left = 192
-    Top = 104
+    Top = 87
     Width = 145
     Height = 21
-    Style = csDropDownList
     ItemHeight = 13
     TabOrder = 7
+    Text = #1057#1042#1057
     OnChange = ComboBox3Change
     Items.Strings = (
       #1057#1042#1057
@@ -114,5 +114,22 @@ object Form1: TForm1
     Caption = 'Button3'
     TabOrder = 9
     OnClick = Button3Click
+  end
+  object ComboBox4: TComboBox
+    Left = 192
+    Top = 114
+    Width = 145
+    Height = 21
+    ItemHeight = 13
+    TabOrder = 10
+    Text = #1052#1091#1092#1090#1072
+    OnChange = ComboBox4Change
+    Items.Strings = (
+      #1055#1086#1076#1096#1080#1087#1085#1080#1082' '#1082#1072#1095#1077#1085#1080#1103
+      #1047#1091#1073#1095#1072#1090#1072#1103' '#1087#1077#1088#1077#1076#1072#1095#1072
+      #1056#1077#1084#1077#1085#1085#1072#1103' '#1087#1077#1088#1077#1076#1072#1095#1072
+      #1052#1091#1092#1090#1072
+      #1042#1072#1083', '#1096#1087#1080#1085#1076#1077#1083#1100
+      #1069#1083#1077#1082#1090#1088#1086#1076#1074#1080#1075#1072#1090#1077#1083#1100)
   end
 end
