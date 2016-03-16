@@ -19,7 +19,7 @@ class XlsHelper
 	private:
 	TExcelApplication * XlsApp;
 	TExcelWorkbook * XlsBook;
-	TExcelWorksheet * XlsSheet;
+ //	TExcelWorksheet * XlsSheet;
 	String RangeLeft;
 	String RangeRight;
 	int myRange; //диапазон значений для выборки из Xls. 800 || 1600
@@ -27,7 +27,7 @@ class XlsHelper
 	float searchingValueL; //индекс найденного числа
 	float searchingValueR; //соответсвенное индексу число в столбце B
   //	float searchingValue; //приходящее число, которое необходимо найти, одно из 800.
-	std::vector<float> Column;
+
 
  //   std::vector<float> ColumnRight;
 
@@ -35,8 +35,9 @@ class XlsHelper
 	public:
 	XlsHelper();
 	~XlsHelper();
-	std::vector<float> MakeMas(AnsiString, float);
-	float MakeSqrtSum(String);
+	inline std::vector<float> MakeMas(AnsiString, float); //возвращает вектор из 7 значений
+										//выбранных из 800. каждый раз обращается к Xls
+	float MakeSqrtSum(String); //суммирует все 800 значений и возвращает среднеквадратичное
 
 	int LogSearching(Variant& a, float StartingPoint);//возвращает индекс найденного элемента
 
@@ -60,13 +61,14 @@ XlsHelper::XlsHelper()
 XlsHelper::~XlsHelper()
 {
    	delete XlsApp;
-	delete XlsBook;
-	delete XlsSheet;
+//	delete XlsBook;
+ //	delete XlsSheet;
 }
 std::vector<float> XlsHelper::MakeMas(AnsiString PathToFile, float searchingValue)
 {
    //	delete XlsApp;
 	XlsApp = new TExcelApplication(NULL);
+	std::vector<float> Column;
 	XlsApp->Visible[0] = false;
 	if (PathToFile.Pos("\r\0"))
 		PathToFile = PathToFile.SubString(0, PathToFile.Length()-2);
@@ -81,16 +83,11 @@ std::vector<float> XlsHelper::MakeMas(AnsiString PathToFile, float searchingValu
 	int c = rangeOfMidValue;
 	for (int i = 0; i < rangeOfMidValue*2+1; i++)
 		Column.push_back(A.GetElement(searchingValueL-(--c),2));
-	int si = Column.size();	                        // ^ разница в индексах с ренжой из экселя. не забудь!!!
-	float a1 = Column[0];
-	float a2 = Column[1];
-	float a3 = Column[2];
-	float a4 = Column[3];
-	float a5 = Column[4];
-	float a6 = Column[5];
-	float a7 = Column[6];
+													// ^ разница в индексах с ренжой из экселя. не забудь!!!
+	int si = Column.size();	                        
 
   //	delete XlsApp;
+	A.Empty();
 	return Column;
 }
 
@@ -106,6 +103,7 @@ float XlsHelper::MakeSqrtSum(String PathToFile)
 	for (int i = 0; i < myRange; i++)
 		X = X + (A.GetElement(i+1,2)*A.GetElement(i+1,2));
 	X = Sqrt(X);
+	A.Clear();
 	return X;
 }
 
@@ -119,22 +117,16 @@ int XlsHelper::LogSearching(Variant& a, float StartingPoint)
 		ColumnLeft.push_back(a.GetElement(i+1,1));
 	int iteration = 0, left = 0,
 		right = ColumnLeft.size()-1, mid;
-		int e = ColumnLeft[0];
-		int e1 = ColumnLeft[13];
-		int e2 = ColumnLeft[14];
-		int e3 = ColumnLeft[799];
-		int e4 = ColumnLeft[399];
 	  //	bool Boo = binary_search(ColumnLeft.begin(),ColumnLeft.end(),StartingPoint);
 	while(left <= right)
 	{
 		iteration++;
 		mid = (int)((left + right)/2);
-		float d = ColumnLeft[mid];
 
 		if (StartingPoint == ColumnLeft[mid])
 		{
-			
-			//return ColumnLeft[mid];
+			ColumnLeft.clear();
+			ColumnLeft.swap(ColumnLeft);
 			return mid;
 		}
 		else
@@ -149,6 +141,7 @@ int XlsHelper::LogSearching(Variant& a, float StartingPoint)
 			}
 		}
 	}
-	//return ColumnLeft[mid];
+	ColumnLeft.clear();
+	ColumnLeft.swap(ColumnLeft);
 	return mid;
 }

@@ -36,7 +36,12 @@ namespace moo
 		ParserInterface();
 		ParserInterface(TStringList*);
 
-		~ParserInterface() {};
+		~ParserInterface()
+		{
+			MassFreq.clear();
+			ListOfPoints.clear();
+			delete M;
+		};
 
 		void setChannel(String a) { Channel = a + "_"; };
 		static String getChannel() {return Channel;};
@@ -55,20 +60,21 @@ namespace moo
 		void setMassFreq(float a) { MassFreq.push_back(a); } ;
 		std::vector<float> getMassFreq() { return MassFreq; };
 
-		std::vector<PointForChart> getCoordinates() { Calculating(); return ListOfPoints; };
+		std::vector<PointForChart> getCoordinates() { Calculating(); MassFreq.clear(); return ListOfPoints; };
 
 		int getSV() { Calculating(); return SV; } ;
 
 	};
 	String ParserInterface::Channel = "2_";
     String ParserInterface::Ranges = "_СВС_";
-	ParserInterface::ParserInterface() : MassFreq(0) {}
+	ParserInterface::ParserInterface() : MassFreq(0), M(NULL) {}
 	ParserInterface::ParserInterface(TStringList* Path) : MassFreq(0) { PathList = Path; }
 
 	void ParserInterface::Calculating()
 	{
 		TStringList * list = new TStringList(); //список отобранных путей к нужным файлам
-        PointForChart PFC;
+		PointForChart PFC;
+		ListOfPoints.clear();
 		for (int i = 0; i < PathList->Count; i++)
 		{
 			if ((PathList->Strings[i].Pos(Channel)) && (PathList->Strings[i].Pos(Ranges)) )
@@ -85,7 +91,8 @@ namespace moo
 			PFC.B = buf[i];
 			PFC.Date = GettingDate(list->Strings[i]);
 			ListOfPoints.push_back(PFC);
-         }
+		 }
+
 //		for (int j = 0; j < counting.size(); j++)
 //		{
 //			PFC.B = counting[j];
@@ -95,6 +102,7 @@ namespace moo
 
 	   //	DiagnObj = FloatToStr(M->getC());
 	  // 	DateList = list;
+      	delete list;
 	}
 	std::vector<float> ParserInterface::CalcDiagnParam(TStringList* L)
 	{
@@ -143,7 +151,7 @@ namespace moo
 				result.push_back(ReturningVal);
 			}
         }
-//		delete M;
+  //		delete M;
     	return result;
 	}
 

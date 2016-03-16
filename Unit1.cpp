@@ -5,11 +5,13 @@
 
 #include "Unit1.h"
 #include "Support.cpp"
+#include "Unit2.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma link "Chart"
 #pragma link "TeEngine"
 #pragma link "TeeProcs"
+#pragma link "Series"
 #pragma resource "*.dfm"
 TForm1 *Form1;
 moo::ParserInterface* Obj = new moo::ParserInterface();
@@ -102,11 +104,6 @@ void __fastcall TForm1::Button1Click(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TForm1::Button2Click(TObject *Sender)
-{
-    Memo1->Text = Obj->getDateList()->Text;	
-}
-//---------------------------------------------------------------------------
 
 void __fastcall TForm1::RadioGroup1Click(TObject *Sender)
 {
@@ -125,16 +122,57 @@ void __fastcall TForm1::Button3Click(TObject *Sender)
 
    //	Memo1->Text = Obj->getCoordinates()[0].Date;
 	std::vector<moo::PointForChart> VPFC = Obj->getCoordinates();
-	for (int i = 0; i < VPFC.size(); i++)
-        Memo1->Lines[i].Text = VPFC[i].Date;
-	
+//	String a1 = VPFC[0].Date;
+//	String a2 = VPFC[1].Date;
+//	String a3 = VPFC[2].Date;
+//	String a4 = VPFC[3].Date;
+	Form2->Chart1->SeriesList->Clear(); //удаляет отработанные серии, очищает график
+	TLineSeries* ls = new TLineSeries(Form2->Chart1);
+   //	Chart1->AddSeries(ls);
+	//Chart1->SeriesList->Clear();
+
+    for (int i = 0; i < VPFC.size(); i++)
+	{
+//        Memo1->Lines->Add(VPFC[i].Date);
+//		Memo1->Lines->Add(VPFC[i].B);
+
+		ls->AddXY(StrToDate(VPFC[i].Date),VPFC[i].B, VPFC[i].Date, clRed);
+	}
+
+   //	Memo1->Lines->Add("\n");
+    
+	Form2->Chart1->AddSeries(ls);
+	Form2->Visible = true;
+  //  delete Obj;
 }
 //---------------------------------------------------------------------------
 
 void __fastcall TForm1::ComboBox4Change(TObject *Sender)
 {
-	Obj->setMassFreq(111.);
+//	Obj->setMassFreq(111.);
+//	Obj->setMassFreq(121.);
+//	Obj->setMassFreq(131.);
+
 	Obj->setDiagnObj(ComboBox4->Text);
+}
+//---------------------------------------------------------------------------
+
+
+
+
+
+void __fastcall TForm1::Edit3Enter(TObject *Sender)
+{
+	Obj->setMassFreq(StrToFloat(Edit3->Text));
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Edit1KeyPress(TObject *Sender, char &Key)
+{
+	if (Key == VK_RETURN)
+	{
+    	Obj->setMassFreq(StrToFloat(Edit1->Text));
+	}
 }
 //---------------------------------------------------------------------------
 

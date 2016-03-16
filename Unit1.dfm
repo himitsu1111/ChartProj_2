@@ -3,7 +3,7 @@ object Form1: TForm1
   Top = 0
   Caption = 'Form1'
   ClientHeight = 502
-  ClientWidth = 685
+  ClientWidth = 780
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -32,10 +32,10 @@ object Form1: TForm1
     TabOrder = 1
   end
   object Memo1: TMemo
-    Left = 479
+    Left = 574
     Top = 8
     Width = 198
-    Height = 457
+    Height = 473
     Lines.Strings = (
       'Memo1')
     TabOrder = 2
@@ -49,32 +49,22 @@ object Form1: TForm1
     TabOrder = 3
     OnChange = ComboBox2Change
   end
-  object Chart1: TChart
-    Left = 24
-    Top = 208
-    Width = 449
-    Height = 273
-    Title.Text.Strings = (
-      'TChart')
-    TabOrder = 4
-  end
   object Button1: TButton
     Left = 24
     Top = 160
     Width = 57
     Height = 25
     Caption = 'Button1'
-    TabOrder = 5
+    TabOrder = 4
     OnClick = Button1Click
   end
   object Button2: TButton
-    Left = 87
+    Left = 225
     Top = 160
     Width = 48
     Height = 25
     Caption = 'Button2'
-    TabOrder = 6
-    OnClick = Button2Click
+    TabOrder = 5
   end
   object ComboBox3: TComboBox
     Left = 192
@@ -82,7 +72,7 @@ object Form1: TForm1
     Width = 145
     Height = 21
     ItemHeight = 13
-    TabOrder = 7
+    TabOrder = 6
     Text = #1057#1042#1057
     OnChange = ComboBox3Change
     Items.Strings = (
@@ -92,10 +82,10 @@ object Form1: TForm1
   end
   object RadioGroup1: TRadioGroup
     Left = 192
-    Top = 24
+    Top = 8
     Width = 225
     Height = 57
-    Caption = 'RadioGroup1'
+    Caption = #1050#1072#1085#1072#1083
     Columns = 5
     Items.Strings = (
       '1'
@@ -103,16 +93,16 @@ object Form1: TForm1
       '3'
       '4'
       '5')
-    TabOrder = 8
+    TabOrder = 7
     OnClick = RadioGroup1Click
   end
   object Button3: TButton
-    Left = 176
+    Left = 128
     Top = 160
     Width = 75
     Height = 25
     Caption = 'Button3'
-    TabOrder = 9
+    TabOrder = 8
     OnClick = Button3Click
   end
   object ComboBox4: TComboBox
@@ -121,7 +111,7 @@ object Form1: TForm1
     Width = 145
     Height = 21
     ItemHeight = 13
-    TabOrder = 10
+    TabOrder = 9
     Text = #1052#1091#1092#1090#1072
     OnChange = ComboBox4Change
     Items.Strings = (
@@ -131,5 +121,60 @@ object Form1: TForm1
       #1052#1091#1092#1090#1072
       #1042#1072#1083', '#1096#1087#1080#1085#1076#1077#1083#1100
       #1069#1083#1077#1082#1090#1088#1086#1076#1074#1080#1075#1072#1090#1077#1083#1100)
+  end
+  object GroupBox1: TGroupBox
+    Left = 24
+    Top = 207
+    Width = 179
+    Height = 202
+    Caption = #1044#1080#1072#1075#1085#1086#1089#1090#1080#1095#1077#1089#1082#1080#1077' '#1087#1088#1080#1079#1085#1072#1082#1080'  ('#1043#1094')'
+    TabOrder = 10
+    object Edit1: TEdit
+      Left = 64
+      Top = 40
+      Width = 97
+      Height = 21
+      TabOrder = 0
+      OnKeyPress = Edit1KeyPress
+    end
+    object Edit2: TEdit
+      Left = 64
+      Top = 88
+      Width = 97
+      Height = 21
+      TabOrder = 1
+    end
+    object Edit3: TEdit
+      Left = 64
+      Top = 136
+      Width = 97
+      Height = 21
+      TabOrder = 2
+      OnEnter = Edit3Enter
+    end
+    object StaticText1: TStaticText
+      Left = 15
+      Top = 40
+      Width = 31
+      Height = 17
+      Caption = 'fx1 ='
+      TabOrder = 3
+    end
+    object StaticText2: TStaticText
+      Left = 15
+      Top = 88
+      Width = 31
+      Height = 17
+      Caption = 'fx2 ='
+      TabOrder = 4
+    end
+    object StaticText3: TStaticText
+      Left = 15
+      Top = 136
+      Width = 31
+      Height = 17
+      Caption = 'fx3 ='
+      TabOrder = 5
+    end
   end
 end
