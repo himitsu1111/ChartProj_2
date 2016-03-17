@@ -33,6 +33,11 @@ __published:	// IDE-managed Components
 	TStaticText *StaticText1;
 	TStaticText *StaticText2;
 	TStaticText *StaticText3;
+	TGroupBox *GroupBox2;
+	TEdit *Edit4;
+	TEdit *Edit5;
+	TStaticText *StaticText4;
+	TStaticText *StaticText5;
 	void __fastcall FormCreate(TObject *Sender);
 	void __fastcall ComboBox1Change(TObject *Sender);
 	void __fastcall ComboBox2Change(TObject *Sender);
@@ -41,8 +46,9 @@ __published:	// IDE-managed Components
 	void __fastcall ComboBox3Change(TObject *Sender);
 	void __fastcall Button3Click(TObject *Sender);
 	void __fastcall ComboBox4Change(TObject *Sender);
-	void __fastcall Edit3Enter(TObject *Sender);
 	void __fastcall Edit1KeyPress(TObject *Sender, char &Key);
+	void __fastcall Edit2KeyPress(TObject *Sender, char &Key);
+	void __fastcall Edit3KeyPress(TObject *Sender, char &Key);
 private:	// User declarations
 public:		// User declarations
 	__fastcall TForm1(TComponent* Owner);

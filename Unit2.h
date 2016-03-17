@@ -16,6 +16,7 @@ class TForm2 : public TForm
 {
 __published:	// IDE-managed Components
 	TChart *Chart1;
+	void __fastcall Chart1BeforeDrawAxes(TObject *Sender);
 private:	// User declarations
 public:		// User declarations
 	__fastcall TForm2(TComponent* Owner);

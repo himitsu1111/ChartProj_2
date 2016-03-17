@@ -20,6 +20,7 @@ object Form2: TForm2
     Height = 521
     Title.Text.Strings = (
       'TChart')
+    OnBeforeDrawAxes = Chart1BeforeDrawAxes
     TabOrder = 0
   end
 end

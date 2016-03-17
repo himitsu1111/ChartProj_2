@@ -4,7 +4,7 @@
 #pragma hdrstop
 
 #include "Unit1.h"
-#include "Support.cpp"
+#include "Support.h"
 #include "Unit2.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
@@ -157,21 +157,31 @@ void __fastcall TForm1::ComboBox4Change(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
-
-
-
-
-void __fastcall TForm1::Edit3Enter(TObject *Sender)
+void __fastcall TForm1::Edit1KeyPress(TObject *Sender, char &Key)
 {
-	Obj->setMassFreq(StrToFloat(Edit3->Text));
+    Obj->MassFreqClearing();
+	if (Key == VK_RETURN && Obj->MassFreqCount() == 0)
+	{
+		Obj->setMassFreq(StrToFloat(Edit1->Text));
+	}
+	 
 }
 //---------------------------------------------------------------------------
 
-void __fastcall TForm1::Edit1KeyPress(TObject *Sender, char &Key)
+void __fastcall TForm1::Edit2KeyPress(TObject *Sender, char &Key)
 {
-	if (Key == VK_RETURN)
+	if (Key == VK_RETURN && Obj->MassFreqCount() == 1)
 	{
-    	Obj->setMassFreq(StrToFloat(Edit1->Text));
+		Obj->setMassFreq(StrToFloat(Edit2->Text));
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Edit3KeyPress(TObject *Sender, char &Key)
+{
+	if (Key == VK_RETURN && Obj->MassFreqCount() == 2)
+	{
+		Obj->setMassFreq(StrToFloat(Edit3->Text));
 	}
 }
 //---------------------------------------------------------------------------

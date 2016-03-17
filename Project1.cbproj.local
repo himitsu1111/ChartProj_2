@@ -7,5 +7,14 @@
     <Transaction>2016.03.09 07:58:55.235.cbproj,C:\Documents\RAD Studio\Projects\Project1.cbproj=C:\mur\CPP\ChartProj_2\Project1.cbproj</Transaction>
     <Transaction>2016.03.09 09:27:29.636.cpp,C:\mur\CPP\ChartProj_2\File1.cpp=C:\mur\CPP\ChartProj_2\Support.cpp</Transaction>
     <Transaction>2016.03.10 12:48:49.885.cpp,C:\mur\CPP\ChartProj_2\File1.cpp=C:\mur\CPP\ChartProj_2\ExcelHelper.cpp</Transaction>
+    <Transaction>2016.03.17 09:39:06.028.h,C:\mur\CPP\ChartProj_2\File1.h=C:\mur\CPP\ChartProj_2\Support.h</Transaction>
+    <Transaction>2016.03.17 09:43:42.405.cpp,C:\mur\CPP\ChartProj_2\Support.cpp=C:\mur\CPP\ChartProj_2\Support1.cpp</Transaction>
+    <Transaction>2016.03.17 09:43:51.515.cpp,C:\mur\CPP\ChartProj_2\Unit3.cpp=C:\mur\CPP\ChartProj_2\Support.cpp</Transaction>
+    <Transaction>2016.03.17 09:43:51.515.h,C:\mur\CPP\ChartProj_2\Unit3.h=C:\mur\CPP\ChartProj_2\Support.h</Transaction>
+    <Transaction>2016.03.17 09:55:06.531.cpp,C:\mur\CPP\ChartProj_2\Support1.cpp=</Transaction>
+    <Transaction>2016.03.17 09:56:27.901.cpp,C:\mur\CPP\ChartProj_2\ExcelHelper.cpp=C:\mur\CPP\ChartProj_2\ExcelHelper1.cpp</Transaction>
+    <Transaction>2016.03.17 09:56:42.188.cpp,C:\mur\CPP\ChartProj_2\Unit3.cpp=C:\mur\CPP\ChartProj_2\ExcelHelper.cpp</Transaction>
+    <Transaction>2016.03.17 09:56:42.188.h,C:\mur\CPP\ChartProj_2\Unit3.h=C:\mur\CPP\ChartProj_2\ExcelHelper.h</Transaction>
+    <Transaction>2016.03.17 10:01:18.188.cpp,C:\mur\CPP\ChartProj_2\ExcelHelper1.cpp=</Transaction>
   </Transactions>
 </BorlandProject>

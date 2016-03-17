@@ -143,6 +143,7 @@ object Form1: TForm1
       Width = 97
       Height = 21
       TabOrder = 1
+      OnKeyPress = Edit2KeyPress
     end
     object Edit3: TEdit
       Left = 64
@@ -150,7 +151,7 @@ object Form1: TForm1
       Width = 97
       Height = 21
       TabOrder = 2
-      OnEnter = Edit3Enter
+      OnKeyPress = Edit3KeyPress
     end
     object StaticText1: TStaticText
       Left = 15
@@ -175,6 +176,44 @@ object Form1: TForm1
       Height = 17
       Caption = 'fx3 ='
       TabOrder = 5
+    end
+  end
+  object GroupBox2: TGroupBox
+    Left = 209
+    Top = 207
+    Width = 176
+    Height = 202
+    Caption = #1044#1086#1087#1091#1089#1090#1080#1084#1099#1077' '#1091#1088#1086#1074#1085#1080
+    TabOrder = 11
+    object Edit4: TEdit
+      Left = 106
+      Top = 40
+      Width = 55
+      Height = 21
+      TabOrder = 0
+    end
+    object Edit5: TEdit
+      Left = 106
+      Top = 88
+      Width = 55
+      Height = 21
+      TabOrder = 1
+    end
+    object StaticText4: TStaticText
+      Left = 7
+      Top = 40
+      Width = 93
+      Height = 17
+      Caption = #1055#1088#1077#1076#1091#1087#1088#1077#1078#1076#1077#1085#1080#1077
+      TabOrder = 2
+    end
+    object StaticText5: TStaticText
+      Left = 7
+      Top = 88
+      Width = 41
+      Height = 17
+      Caption = #1040#1074#1072#1088#1080#1103
+      TabOrder = 3
     end
   end
 end
