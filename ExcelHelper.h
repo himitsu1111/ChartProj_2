@@ -19,15 +19,14 @@ class XlsHelper
 	TExcelApplication * XlsApp;
 	TExcelWorkbook * XlsBook;
  //	TExcelWorksheet * XlsSheet;
-	String RangeLeft;
-	String RangeRight;
+	String PathToLastFile;
 	int myRange; //диапазон значений для выборки из Xls. 800 || 1600
 	int rangeOfMidValue; //указывает +/- диапазон значений выборки из столбца B
 	float searchingValueL; //индекс найденного числа
 	float searchingValueR; //соответсвенное индексу число в столбце B
   //	float searchingValue; //приходящее число, которое необходимо найти, одно из 800.
-
-
+    std::vector<float> ColumnLeft; //массив значений выбранных из Xls
+    Variant XlsRange;
  //   std::vector<float> ColumnRight;
 
 
@@ -38,7 +37,7 @@ class XlsHelper
 										//выбранных из 800. каждый раз обращается к Xls
 	float MakeSqrtSum(String); //суммирует все 800 значений и возвращает среднеквадратичное
 
-	int LogSearching(Variant& a, float StartingPoint);//возвращает индекс найденного элемента
+	int LogSearching(float StartingPoint);//возвращает индекс найденного элемента
 
 	void setMyRange(int a) { myRange = a; } ;
 	int getMyRange() { return myRange; };

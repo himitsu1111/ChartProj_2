@@ -22,7 +22,7 @@ __fastcall TForm2::TForm2(TComponent* Owner)
 void __fastcall TForm2::Chart1BeforeDrawAxes(TObject *Sender)
 {
 	//
-	moo::DrawOnChart(StrToFloat(Form1->Edit4->Text), StrToFloat(Form1->Edit5->Text));
+//	moo::DrawOnChart(StrToFloat(Form1->Edit4->Text), StrToFloat(Form1->Edit5->Text));
 	const cGelt = 4;          //для рисования на канве чарта
 	double Gelt[cGelt][2] =
 	{ 	//x      y

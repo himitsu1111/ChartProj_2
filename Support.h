@@ -18,7 +18,7 @@ namespace moo
 //		~PointForChart();
 	};
 
-	void DrawOnChart(double A, double B) ;
+   //	void DrawOnChart(double A, double B) ;
 
 	class ParserInterface
 	{

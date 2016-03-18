@@ -98,10 +98,10 @@ String ParserInterface::GettingDate(String s)
 	return s.SubString(s.Length()-12,8);	
 }
 
-void DrawOnChart(double A, double B)
-{
-	
-}
+//void DrawOnChart(double A, double B)
+//{
+//	
+//}
 
 //---------------------------------------------------------------------------
 #pragma package(smart_init)

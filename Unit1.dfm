@@ -15,7 +15,7 @@ object Form1: TForm1
   PixelsPerInch = 96
   TextHeight = 13
   object ComboBox1: TComboBox
-    Left = 24
+    Left = 176
     Top = 24
     Width = 145
     Height = 21
@@ -24,7 +24,7 @@ object Form1: TForm1
     OnChange = ComboBox1Change
   end
   object ListBox1: TListBox
-    Left = 24
+    Left = 176
     Top = 115
     Width = 145
     Height = 25
@@ -41,7 +41,7 @@ object Form1: TForm1
     TabOrder = 2
   end
   object ComboBox2: TComboBox
-    Left = 24
+    Left = 176
     Top = 64
     Width = 145
     Height = 21
@@ -50,7 +50,7 @@ object Form1: TForm1
     OnChange = ComboBox2Change
   end
   object Button1: TButton
-    Left = 24
+    Left = 176
     Top = 160
     Width = 57
     Height = 25
@@ -59,7 +59,7 @@ object Form1: TForm1
     OnClick = Button1Click
   end
   object Button2: TButton
-    Left = 225
+    Left = 377
     Top = 160
     Width = 48
     Height = 25
@@ -67,7 +67,7 @@ object Form1: TForm1
     TabOrder = 5
   end
   object ComboBox3: TComboBox
-    Left = 192
+    Left = 344
     Top = 87
     Width = 145
     Height = 21
@@ -81,7 +81,7 @@ object Form1: TForm1
       #1057#1054)
   end
   object RadioGroup1: TRadioGroup
-    Left = 192
+    Left = 344
     Top = 8
     Width = 225
     Height = 57
@@ -97,7 +97,7 @@ object Form1: TForm1
     OnClick = RadioGroup1Click
   end
   object Button3: TButton
-    Left = 128
+    Left = 280
     Top = 160
     Width = 75
     Height = 25
@@ -106,7 +106,7 @@ object Form1: TForm1
     OnClick = Button3Click
   end
   object ComboBox4: TComboBox
-    Left = 192
+    Left = 344
     Top = 114
     Width = 145
     Height = 21
@@ -123,7 +123,7 @@ object Form1: TForm1
       #1069#1083#1077#1082#1090#1088#1086#1076#1074#1080#1075#1072#1090#1077#1083#1100)
   end
   object GroupBox1: TGroupBox
-    Left = 24
+    Left = 176
     Top = 207
     Width = 179
     Height = 202
@@ -179,7 +179,7 @@ object Form1: TForm1
     end
   end
   object GroupBox2: TGroupBox
-    Left = 209
+    Left = 361
     Top = 207
     Width = 176
     Height = 202
