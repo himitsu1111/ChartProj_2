@@ -7,7 +7,10 @@
 #include <vector>
 #include "ExcelHelper.h"
 
+
+
 //---------------------------------------------------------------------------
+using namespace doo;
 namespace moo
 {
 	struct PointForChart
@@ -47,7 +50,11 @@ namespace moo
 		~ParserInterface()
 		{
 			MassFreq.clear();
-			ListOfPoints.clear();
+			std::vector<float>(MassFreq).swap(MassFreq);
+
+            ListOfPoints.clear();
+			std::vector<PointForChart>(ListOfPoints).swap(ListOfPoints);
+
 			delete M;
 		};
 

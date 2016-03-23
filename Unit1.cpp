@@ -4,8 +4,11 @@
 #pragma hdrstop
 
 #include "Unit1.h"
+#include "Unit3.h"
 #include "Support.h"
 #include "Unit2.h"
+
+
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma link "Chart"
@@ -22,7 +25,7 @@ __fastcall TForm1::TForm1(TComponent* Owner)
 {
 }
 //---------------------------------------------------------------------------
-TStringList* ListFiles(const String &DirName)
+TStringList* TForm1::ListFiles(const String &DirName)
 {
 	TStringList* List = new TStringList;
 	List->Clear();
@@ -98,7 +101,7 @@ void __fastcall TForm1::Button1Click(TObject *Sender)
 	//Memo1->Text = Obj->getChannel();
 	//Obj->setChannel("test");
   //	Obj->setChannel("test");
-	Memo1->Text = Obj->getPathList()->Text;
+	Form3->Visible = true;
 
 
 }
@@ -140,10 +143,10 @@ void __fastcall TForm1::Button3Click(TObject *Sender)
 	}
 
    //	Memo1->Lines->Add("\n");
-    
+    Form2->Chart1->View3D = false;
 	Form2->Chart1->AddSeries(ls);
 	Form2->Visible = true;
-  //  delete Obj;
+//    delete Obj;
 }
 //---------------------------------------------------------------------------
 
@@ -183,6 +186,12 @@ void __fastcall TForm1::Edit3KeyPress(TObject *Sender, char &Key)
 	{
 		Obj->setMassFreq(StrToFloat(Edit3->Text));
 	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::FormDestroy(TObject *Sender)
+{
+	delete Obj;	
 }
 //---------------------------------------------------------------------------
 

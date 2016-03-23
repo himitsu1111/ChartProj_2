@@ -5,9 +5,12 @@
 
 #include "ExcelHelper.h"
 
+
+
 //---------------------------------------------------------------------------
 
 //---------------------------------------------------------------------------
+using namespace doo;
 XlsHelper::XlsHelper()
 {
 	myRange = 800;
@@ -23,8 +26,8 @@ XlsHelper::XlsHelper()
 XlsHelper::~XlsHelper()
 {
 	delete XlsApp;
-	ColumnLeft.clear();
-	std::vector<float>(ColumnLeft).swap(ColumnLeft);
+   //	ColumnLeft.clear();
+   //	std::vector<float>(ColumnLeft).swap(ColumnLeft);
 //	delete XlsBook;
  //	delete XlsSheet;
 }
@@ -45,11 +48,11 @@ std::vector<float> XlsHelper::MakeMas(AnsiString PathToFile, float searchingValu
 		XlsApp->Workbooks->Open(WideString(PathToFile));//"c:\\676\\Chiron FZ15W\\0120272323\\2_СВС_03.06.13.xlsx"));
 
 		XlsRange = XlsApp->Range[Variant("A" + IntToStr(14) +
-								  ":B" + IntToStr(myRange) + IntToStr(13))]->get_Value();
+								  ":B" + IntToStr(myRange+14) /*+ IntToStr(13)*/)]->get_Value();
 								  //получение массива Variant из диапазона файла Xls
 		//A.GetElement(index,column); начинают отсчет с 1!
-		for (int i = 0; i < myRange; i++)
-			ColumnLeft.push_back(XlsRange.GetElement(i+1,1));
+//		for (int i = 0; i < myRange; i++)
+//			ColumnLeft.push_back(XlsRange.GetElement(i+1,1));
 	}
 	searchingValueL = LogSearching(searchingValue);
 //	                                590
@@ -72,7 +75,7 @@ float XlsHelper::MakeSqrtSum(String PathToFile)
 		PathToFile = PathToFile.SubString(0, PathToFile.Length()-2);
 	XlsApp->Workbooks->Open(WideString(PathToFile));
     Variant A = XlsApp->Range[Variant("A" + IntToStr(14) +
-							  ":B" + IntToStr(myRange) + IntToStr(13))]->get_Value();
+							  ":B" + IntToStr(myRange+14) /*+ IntToStr(13)*/)]->get_Value();
 	float X = 0;
 	for (int i = 0; i < myRange; i++)
 		X = X + (A.GetElement(i+1,2)*A.GetElement(i+1,2));
@@ -87,7 +90,8 @@ int XlsHelper::LogSearching(float StartingPoint)
 //	x = div(StartingPoint/2);
 //	x.quot;
    //	std::vector<float> ColumnLeft;
-	int iteration = 0, left = 0, right = ColumnLeft.size()-1, mid;
+    int arSize = XlsRange.ArrayHighBound(1);
+	int iteration = 0, left = 0, right = XlsRange.ArrayHighBound(1)-1, mid;
 
 	  //	bool Boo = binary_search(ColumnLeft.begin(),ColumnLeft.end(),StartingPoint);
 	while(left <= right)

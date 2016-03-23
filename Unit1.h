@@ -38,6 +38,7 @@ __published:	// IDE-managed Components
 	TEdit *Edit5;
 	TStaticText *StaticText4;
 	TStaticText *StaticText5;
+
 	void __fastcall FormCreate(TObject *Sender);
 	void __fastcall ComboBox1Change(TObject *Sender);
 	void __fastcall ComboBox2Change(TObject *Sender);
@@ -49,8 +50,10 @@ __published:	// IDE-managed Components
 	void __fastcall Edit1KeyPress(TObject *Sender, char &Key);
 	void __fastcall Edit2KeyPress(TObject *Sender, char &Key);
 	void __fastcall Edit3KeyPress(TObject *Sender, char &Key);
+	void __fastcall FormDestroy(TObject *Sender);
 private:	// User declarations
 public:		// User declarations
+	TStringList* ListFiles(const String &DirName);
 	__fastcall TForm1(TComponent* Owner);
 };
 //---------------------------------------------------------------------------
