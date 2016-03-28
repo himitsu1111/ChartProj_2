@@ -18,6 +18,7 @@
 #pragma resource "*.dfm"
 TForm1 *Form1;
 moo::ParserInterface* Obj = new moo::ParserInterface();
+
 //moo::ParserInterface* Obj = new moo::ParserInterface();
 //---------------------------------------------------------------------------
 __fastcall TForm1::TForm1(TComponent* Owner)
@@ -143,7 +144,7 @@ void __fastcall TForm1::Button3Click(TObject *Sender)
 	}
 
    //	Memo1->Lines->Add("\n");
-    Form2->Chart1->View3D = false;
+	Form2->Chart1->View3D = false;
 	Form2->Chart1->AddSeries(ls);
 	Form2->Visible = true;
 //    delete Obj;
@@ -167,7 +168,7 @@ void __fastcall TForm1::Edit1KeyPress(TObject *Sender, char &Key)
 	{
 		Obj->setMassFreq(StrToFloat(Edit1->Text));
 	}
-	 
+
 }
 //---------------------------------------------------------------------------
 
@@ -192,6 +193,13 @@ void __fastcall TForm1::Edit3KeyPress(TObject *Sender, char &Key)
 void __fastcall TForm1::FormDestroy(TObject *Sender)
 {
 	delete Obj;	
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button2Click(TObject *Sender)
+{
+	//
+	Obj->saveToFile();	
 }
 //---------------------------------------------------------------------------
 

@@ -18,12 +18,12 @@ __fastcall TForm3::TForm3(TComponent* Owner)
 void __fastcall TForm3::Button1Click(TObject *Sender)
 {
 	//
-	Form1->ListFiles("C:\\676\\");
+   //	Form1->ListFiles("C:\\676\\");
 	//	TreeView1
 	TreeView1->Items->Clear();
 	//перва¤ группа нодов
 	ListFilesToo(NULL,
-				 "C:\\676\\");
+				 "C:\\2676\\");
 
 }
 //---------------------------------------------------------------------------
@@ -36,7 +36,7 @@ void TForm3::ListFilesToo(TTreeNode* TN, const String& DirName)
 		if (!(sr.Name == "." || sr.Name == ".."))//это показывать не надо
 		if (sr.Attr & faDirectory)// найдена папка
 		{
-			if (TN)
+			if (TN) //условие для первого звена. решается добавлять потомков первых звеньев или сами первые звенья
 				ListFilesToo( TreeView1->Items->AddChild(TN, sr.Name),  DirName+"\\" + sr.Name);//вызывает сама себя для поиска в подпапках
 			else
 				ListFilesToo( TreeView1->Items->Add(TN, sr.Name),  DirName+"\\" + sr.Name);
@@ -47,6 +47,7 @@ void TForm3::ListFilesToo(TTreeNode* TN, const String& DirName)
 			// String Ext=ExtractFileExt(sr.Name).UpperCase();
 			// if (Ext==".JPG") //поиск по расширению
 		   //	List->Add(DirName+"\\" + sr.Name);//добавляет файлы
+        	TreeView1->Items->AddChild(TN, sr.Name);
 		}
 	}
 	while (!FindNext(sr));//ищем опять, пока не найдем все

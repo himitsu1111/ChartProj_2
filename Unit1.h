@@ -51,6 +51,7 @@ __published:	// IDE-managed Components
 	void __fastcall Edit2KeyPress(TObject *Sender, char &Key);
 	void __fastcall Edit3KeyPress(TObject *Sender, char &Key);
 	void __fastcall FormDestroy(TObject *Sender);
+	void __fastcall Button2Click(TObject *Sender);
 private:	// User declarations
 public:		// User declarations
 	TStringList* ListFiles(const String &DirName);

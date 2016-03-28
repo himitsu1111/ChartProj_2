@@ -66,6 +66,7 @@ object Form1: TForm1
     Height = 25
     Caption = 'Button2'
     TabOrder = 5
+    OnClick = Button2Click
   end
   object ComboBox3: TComboBox
     Left = 344

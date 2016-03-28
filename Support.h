@@ -79,6 +79,8 @@ namespace moo
 
 		std::vector<PointForChart> getCoordinates() { Calculating(); MassFreq.clear(); return ListOfPoints; };
 
+		void saveToFile(); //сохранение файла с результатами расчета и
+		                   //координатами точек для чарта.
 
 	};
 	String ParserInterface::Channel = "2_";

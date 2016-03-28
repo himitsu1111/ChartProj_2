@@ -99,6 +99,12 @@ String ParserInterface::GettingDate(String s)
 	return s.SubString(s.Length()-12,8);	
 }
 
+void ParserInterface::saveToFile()
+{
+	TStringList * str = new TStringList();
+	str->SaveToFile("C:\\1.me");
+}
+
 //void DrawOnChart(double A, double B)
 //{
 //	
