@@ -35,7 +35,7 @@ __published:	// IDE-managed Components
 private:	// User declarations
 public:		// User declarations
 	__fastcall TForm3(TComponent* Owner);
-	void ListFilesToo(const String &DirName);
+	void ListFilesToo(TTreeNode* TN, const String& DirName);
 };
 //---------------------------------------------------------------------------
 extern PACKAGE TForm3 *Form3;
