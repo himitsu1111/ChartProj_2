@@ -29,6 +29,7 @@ namespace moo
 		static String Channel; //канал
 		static String Ranges;  //свс сву со
 		String DiagnObj; //объект диагностики
+		String NameDO;
 		std::vector<float> MassFreq; //массив диагностических признаков, частот (либо 1 либо 3, если DaignObj - подшипник)
 		std::vector<PointForChart> ListOfPoints; //массив структур вида (число; число; дата) 7 штук!
 		TStringList * DateList; //список дат (на всякий случай, потом возможно не пригодится)
@@ -79,12 +80,15 @@ namespace moo
 
 		std::vector<PointForChart> getCoordinates() { Calculating(); MassFreq.clear(); return ListOfPoints; };
 
+		void setNameDO(String s) { NameDO = s; }; //имя файла с сохраненными расчетами и координатами графика
 		void saveToFile(); //сохранение файла с результатами расчета и
 		                   //координатами точек для чарта.
-
+		String getPathToSave() { return PathList->Strings[0].Pos("123"); }
+			//возвращает путь к файлам Xls. ориентируется по пути к первому файлу,
+			//потому что файлы все должны быть по одному пути
 	};
 	String ParserInterface::Channel = "2_";
-    String ParserInterface::Ranges = "_СВС_";
+	String ParserInterface::Ranges = "_СВС_";
 	ParserInterface::ParserInterface() : MassFreq(0), M(NULL) {}
 	ParserInterface::ParserInterface(TStringList* Path) : MassFreq(0) { PathList = Path; }
 }

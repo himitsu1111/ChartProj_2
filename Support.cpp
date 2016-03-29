@@ -102,7 +102,11 @@ String ParserInterface::GettingDate(String s)
 void ParserInterface::saveToFile()
 {
 	TStringList * str = new TStringList();
-	str->SaveToFile("C:\\1.me");
+	str->Add(Ranges);
+	str->Add(Channel);
+	str->Add(DiagnObj);
+	//str->Add(Ranges);
+	str->SaveToFile("C:\\"+ NameDO +".me");
 }
 
 //void DrawOnChart(double A, double B)

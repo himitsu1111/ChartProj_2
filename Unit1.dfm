@@ -55,16 +55,16 @@ object Form1: TForm1
     Top = 160
     Width = 57
     Height = 25
-    Caption = 'Button1'
+    Caption = #1044#1077#1088#1077#1074#1086
     TabOrder = 4
     OnClick = Button1Click
   end
   object Button2: TButton
-    Left = 377
+    Left = 368
     Top = 160
-    Width = 48
+    Width = 104
     Height = 25
-    Caption = 'Button2'
+    Caption = #1057#1086#1093#1088#1072#1085#1080#1090#1100' '#1088#1072#1089#1095#1077#1090
     TabOrder = 5
     OnClick = Button2Click
   end
@@ -99,11 +99,11 @@ object Form1: TForm1
     OnClick = RadioGroup1Click
   end
   object Button3: TButton
-    Left = 280
+    Left = 262
     Top = 160
     Width = 75
     Height = 25
-    Caption = 'Button3'
+    Caption = #1056#1072#1089#1095#1077#1090
     TabOrder = 8
     OnClick = Button3Click
   end
@@ -126,7 +126,7 @@ object Form1: TForm1
   end
   object GroupBox1: TGroupBox
     Left = 176
-    Top = 207
+    Top = 239
     Width = 179
     Height = 202
     Caption = #1044#1080#1072#1075#1085#1086#1089#1090#1080#1095#1077#1089#1082#1080#1077' '#1087#1088#1080#1079#1085#1072#1082#1080'  ('#1043#1094')'
@@ -182,7 +182,7 @@ object Form1: TForm1
   end
   object GroupBox2: TGroupBox
     Left = 361
-    Top = 207
+    Top = 239
     Width = 176
     Height = 202
     Caption = #1044#1086#1087#1091#1089#1090#1080#1084#1099#1077' '#1091#1088#1086#1074#1085#1080
@@ -217,5 +217,12 @@ object Form1: TForm1
       Caption = #1040#1074#1072#1088#1080#1103
       TabOrder = 3
     end
+  end
+  object Edit6: TEdit
+    Left = 176
+    Top = 200
+    Width = 296
+    Height = 21
+    TabOrder = 12
   end
 end

@@ -38,6 +38,7 @@ __published:	// IDE-managed Components
 	TEdit *Edit5;
 	TStaticText *StaticText4;
 	TStaticText *StaticText5;
+	TEdit *Edit6;
 
 	void __fastcall FormCreate(TObject *Sender);
 	void __fastcall ComboBox1Change(TObject *Sender);

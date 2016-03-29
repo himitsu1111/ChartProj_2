@@ -168,7 +168,8 @@ void __fastcall TForm1::Edit1KeyPress(TObject *Sender, char &Key)
 	{
 		Obj->setMassFreq(StrToFloat(Edit1->Text));
 	}
-
+	Edit2->Text = "";
+	Edit3->Text = "";
 }
 //---------------------------------------------------------------------------
 
@@ -199,6 +200,7 @@ void __fastcall TForm1::FormDestroy(TObject *Sender)
 void __fastcall TForm1::Button2Click(TObject *Sender)
 {
 	//
+	Obj->setNameDO(Edit6->Text);
 	Obj->saveToFile();	
 }
 //---------------------------------------------------------------------------
