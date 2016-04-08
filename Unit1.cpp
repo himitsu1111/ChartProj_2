@@ -163,9 +163,10 @@ void __fastcall TForm1::ComboBox4Change(TObject *Sender)
 
 void __fastcall TForm1::Edit1KeyPress(TObject *Sender, char &Key)
 {
-    Obj->MassFreqClearing();
+
 	if (Key == VK_RETURN && Obj->MassFreqCount() == 0)
 	{
+        Obj->MassFreqClearing();
 		Obj->setMassFreq(StrToFloat(Edit1->Text));
 	}
 	Edit2->Text = "";
@@ -204,4 +205,5 @@ void __fastcall TForm1::Button2Click(TObject *Sender)
 	Obj->saveToFile();	
 }
 //---------------------------------------------------------------------------
+
 

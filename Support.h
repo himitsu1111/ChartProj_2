@@ -50,8 +50,8 @@ namespace moo
 
 		~ParserInterface()
 		{
-			MassFreq.clear();
-			std::vector<float>(MassFreq).swap(MassFreq);
+//			MassFreq.clear();
+//			std::vector<float>(MassFreq).swap(MassFreq);
 
             ListOfPoints.clear();
 			std::vector<PointForChart>(ListOfPoints).swap(ListOfPoints);
@@ -78,19 +78,21 @@ namespace moo
 		int MassFreqCount() { return MassFreq.size(); } //возвращает размер массива частот
 		void MassFreqClearing() { MassFreq.clear(); std::vector<float>(MassFreq).swap(MassFreq); } //чистит массив частот
 
-		std::vector<PointForChart> getCoordinates() { Calculating(); MassFreq.clear(); return ListOfPoints; };
+		std::vector<PointForChart> getCoordinates() { Calculating(); /*MassFreq.clear();*/ return ListOfPoints; };
 
 		void setNameDO(String s) { NameDO = s; }; //имя файла с сохраненными расчетами и координатами графика
 		void saveToFile(); //сохранение файла с результатами расчета и
-		                   //координатами точек для чарта.
-		String getPathToSave() { return PathList->Strings[0].Pos("123"); }
+						   //координатами точек для чарта.
+		String getPathToSave(); // { return PathList->Strings[0].Pos("123"); }
 			//возвращает путь к файлам Xls. ориентируется по пути к первому файлу,
 			//потому что файлы все должны быть по одному пути
+
+        TStringList* getListOfPoints();//возвращает строки с содержимым вектора ListOfFiles
 	};
 	String ParserInterface::Channel = "2_";
 	String ParserInterface::Ranges = "_СВС_";
-	ParserInterface::ParserInterface() : MassFreq(0), M(NULL) {}
-	ParserInterface::ParserInterface(TStringList* Path) : MassFreq(0) { PathList = Path; }
+	ParserInterface::ParserInterface() : M(NULL) {}
+	ParserInterface::ParserInterface(TStringList* Path) { PathList = Path; }
 }
 
 //---------------------------------------------------------------------------

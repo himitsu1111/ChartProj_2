@@ -99,16 +99,60 @@ String ParserInterface::GettingDate(String s)
 	return s.SubString(s.Length()-12,8);	
 }
 
+TStringList* ParserInterface::getListOfPoints()
+{
+	TStringList* pointList = new TStringList();
+	for (int i = 0; i < ListOfPoints.size(); i++)
+	{
+		pointList->Add(FloatToStr(ListOfPoints[i].B));
+		pointList->Add(ListOfPoints[i].Date);
+	}
+	return pointList;
+}
 void ParserInterface::saveToFile()
 {
 	TStringList * str = new TStringList();
 	str->Add(Ranges);
 	str->Add(Channel);
 	str->Add(DiagnObj);
-	//str->Add(Ranges);
-	str->SaveToFile("C:\\"+ NameDO +".me");
-}
+	//---
+	int si = MassFreq.size();
+    int si2 = MassFreqCount();
+	float x1 = MassFreq[0];
+	float x2 = MassFreq[1];
+	float x3 = MassFreq[2];
+	float x4 = MassFreq[3];
+	//---
+	if (MassFreq.size() > 1)
+	{
+		str->Add(FloatToStr(MassFreq[0]));
+		str->Add(FloatToStr(MassFreq[1]));
+		str->Add(FloatToStr(MassFreq[2]));
+	}
+	else
+	{
+		str->Add(FloatToStr(MassFreq[0]));
+		str->Add("");
+		str->Add("");
+	}
 
+	TStringList * buf = getListOfPoints();
+	for (int i = 0; i < buf->Count; i++)
+		str->Add(buf->Strings[i]);
+	//str->Add(Ranges);
+	str->SaveToFile(getPathToSave() + NameDO +".od");
+}
+String ParserInterface::getPathToSave()
+{
+	String path = "";
+	int k = PathList->Strings[0].Length();
+	for (int i = k; i > 0; i--)
+		if (PathList->Strings[0].IsDelimiter("\\",  i))
+		{
+            path = PathList->Strings[0].SubString(0, i);
+			return path;
+		}
+}
 //void DrawOnChart(double A, double B)
 //{
 //	

@@ -3,7 +3,7 @@ object Form3: TForm3
   Top = 0
   Caption = #1055#1072#1088#1072#1084#1077#1090#1088#1099' '#1086#1073#1098#1077#1082#1090#1072' '#1076#1080#1072#1075#1085#1086#1089#1090#1080#1082#1080
   ClientHeight = 471
-  ClientWidth = 501
+  ClientWidth = 925
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -147,14 +147,33 @@ object Form3: TForm3
     Height = 417
     Indent = 19
     TabOrder = 1
+    OnMouseDown = TreeView1MouseDown
   end
   object Button1: TButton
-    Left = 102
+    Left = 8
     Top = 438
     Width = 75
     Height = 25
     Caption = #1054#1073#1085#1086#1074#1080#1090#1100
     TabOrder = 2
     OnClick = Button1Click
+  end
+  object Chart1: TChart
+    Left = 503
+    Top = 8
+    Width = 414
+    Height = 455
+    Title.Text.Strings = (
+      'TChart')
+    TabOrder = 3
+  end
+  object Button2: TButton
+    Left = 95
+    Top = 438
+    Width = 75
+    Height = 25
+    Caption = #1059#1076#1072#1083#1080#1090#1100
+    TabOrder = 4
+    OnClick = Button2Click
   end
 end
