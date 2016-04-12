@@ -34,27 +34,25 @@ XlsHelper::~XlsHelper()
 
 std::vector<float> XlsHelper::MakeMas(AnsiString PathToFile, float searchingValue)
 {
-   //	delete XlsApp;
 	std::vector<float> Column;
 
 	if (PathToFile != PathToLastFile)
 	{
-        XlsApp = new TExcelApplication(NULL);
+		XlsApp = new TExcelApplication(NULL);
 
 		XlsApp->Visible[0] = false;
+		if (PathToFile.Pos('\0'))
+        	PathToFile = PathToFile.SubString(0, PathToFile.Length()-2);    
 
-		if (PathToFile.Pos("\r\0"))
-			PathToFile = PathToFile.SubString(0, PathToFile.Length()-2);
-		XlsApp->Workbooks->Open(WideString(PathToFile));//"c:\\676\\Chiron FZ15W\\0120272323\\2_СВС_03.06.13.xlsx"));
 
+		XlsApp->Workbooks->Open(WideString(PathToFile));
 		XlsRange = XlsApp->Range[Variant("A" + IntToStr(14) +
 								  ":B" + IntToStr(myRange+14) /*+ IntToStr(13)*/)]->get_Value();
 								  //получение массива Variant из диапазона файла Xls
 		//A.GetElement(index,column); начинают отсчет с 1!
-//		for (int i = 0; i < myRange; i++)
-//			ColumnLeft.push_back(XlsRange.GetElement(i+1,1));
+
 	}
-	searchingValueL = LogSearching(searchingValue);
+    searchingValueL = LogSearching(searchingValue);
 //	                                590
 	int c = rangeOfMidValue;
 	for (int i = 0; i < rangeOfMidValue*2+1; i++)
@@ -62,8 +60,6 @@ std::vector<float> XlsHelper::MakeMas(AnsiString PathToFile, float searchingValu
 													// ^ разница в индексах с ренжой из экселя. не забудь!!!
 	int si = Column.size();	                        
 
-  //	delete XlsApp;
-   //	XlsRange.Empty();
     PathToLastFile = PathToFile;
 	return Column;
 }
@@ -71,7 +67,7 @@ std::vector<float> XlsHelper::MakeMas(AnsiString PathToFile, float searchingValu
 float XlsHelper::MakeSqrtSum(String PathToFile)
 {
 	XlsApp = new TExcelApplication(NULL);
-    if (PathToFile.Pos("\r\0"))
+	if (PathToFile.Pos('\0'))
 		PathToFile = PathToFile.SubString(0, PathToFile.Length()-2);
 	XlsApp->Workbooks->Open(WideString(PathToFile));
     Variant A = XlsApp->Range[Variant("A" + IntToStr(14) +
@@ -117,5 +113,8 @@ int XlsHelper::LogSearching(float StartingPoint)
 	}
 	return mid;
 }
+
+
+
 //---------------------------------------------------------------------------
 #pragma package(smart_init)

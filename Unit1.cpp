@@ -4,7 +4,6 @@
 #pragma hdrstop
 
 #include "Unit1.h"
-#include "Unit3.h"
 #include "Support.h"
 #include "Unit2.h"
 
@@ -15,6 +14,7 @@
 #pragma link "TeEngine"
 #pragma link "TeeProcs"
 #pragma link "Series"
+#pragma link "excel_xp_srvr"
 #pragma resource "*.dfm"
 TForm1 *Form1;
 moo::ParserInterface* Obj = new moo::ParserInterface();

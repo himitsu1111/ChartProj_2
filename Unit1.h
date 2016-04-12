@@ -12,6 +12,10 @@
 #include "TeeProcs.hpp"
 #include <ExtCtrls.hpp>
 #include "Series.hpp"
+#include "Unit3.h"
+#include "excel_xp_srvr.h"
+#include <OleServer.hpp>
+
 //---------------------------------------------------------------------------
 class TForm1 : public TForm
 {
@@ -39,6 +43,7 @@ __published:	// IDE-managed Components
 	TStaticText *StaticText4;
 	TStaticText *StaticText5;
 	TEdit *Edit6;
+	TExcelApplication *ExcelApplication1;
 
 	void __fastcall FormCreate(TObject *Sender);
 	void __fastcall ComboBox1Change(TObject *Sender);

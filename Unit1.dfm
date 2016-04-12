@@ -225,4 +225,10 @@ object Form1: TForm1
     Height = 21
     TabOrder = 12
   end
+  object ExcelApplication1: TExcelApplication
+    AutoConnect = False
+    ConnectKind = ckRunningOrNew
+    Left = 96
+    Top = 160
+  end
 end

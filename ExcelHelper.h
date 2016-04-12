@@ -20,7 +20,7 @@ namespace doo
 	{
 		private:
 		TExcelApplication * XlsApp;
-		TExcelWorkbook * XlsBook;
+	 	TExcelWorkbook * XlsBook;
 	 //	TExcelWorksheet * XlsSheet;
 		String PathToLastFile;
 		int myRange; //диапазон значений для выборки из Xls. 800 || 1600

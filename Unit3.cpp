@@ -130,12 +130,13 @@ void __fastcall TForm3::TreeView1MouseDown(TObject *Sender, TMouseButton Button,
 //---------------------------------------------------------------------------
 
 void __fastcall TForm3::Button2Click(TObject *Sender)
-{
+{              //функция для удаления файлов
 	//
-    AnsiString str1 = "C:\\676\\Chiron FZ15W\\012027\\test№1.od";
-	AnsiString str = pathToFile;
-	const char * ch1 = pathToFile.c_str();
-	const char * ch = str1.c_str();
+  //  AnsiString str1 = "C:\\676\\Chiron FZ15W\\012027\\test№1.od";
+	AnsiString str = pathToFile += '\0'; //добавляет в строку второй нулевой символ для работы
+										// SHFileOperation()
+//	const char * ch1 = pathToFile.c_str();
+//	const char * ch = str1.c_str();
 	SHFILEOPSTRUCT fStrukt;
 	fStrukt.wFunc = FO_DELETE;
 	fStrukt.pFrom = str.c_str();
