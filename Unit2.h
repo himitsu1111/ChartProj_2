@@ -11,11 +11,13 @@
 #include "TeEngine.hpp"
 #include "TeeProcs.hpp"
 #include <ExtCtrls.hpp>
+#include "Series.hpp"
 //---------------------------------------------------------------------------
 class TForm2 : public TForm
 {
 __published:	// IDE-managed Components
 	TChart *Chart1;
+	TLineSeries *Series1;
 
 	void __fastcall Chart1BeforeDrawAxes(TObject *Sender);
 private:	// User declarations

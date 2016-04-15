@@ -93,17 +93,17 @@ object Form3: TForm3
       object StaticText6: TStaticText
         Left = 16
         Top = 32
-        Width = 93
+        Width = 20
         Height = 17
-        Caption = #1055#1088#1077#1076#1091#1087#1088#1077#1078#1076#1077#1085#1080#1077
+        Caption = '0.1'
         TabOrder = 0
       end
       object StaticText7: TStaticText
         Left = 160
         Top = 32
-        Width = 41
+        Width = 20
         Height = 17
-        Caption = #1040#1074#1072#1088#1080#1103
+        Caption = '0.1'
         TabOrder = 1
       end
     end
@@ -165,7 +165,19 @@ object Form3: TForm3
     Height = 455
     Title.Text.Strings = (
       'TChart')
+    OnBeforeDrawAxes = Chart1BeforeDrawAxes
     TabOrder = 3
+    object Series1: TLineSeries
+      Marks.Callout.Brush.Color = clBlack
+      Marks.Visible = False
+      Pointer.InflateMargins = True
+      Pointer.Style = psRectangle
+      Pointer.Visible = False
+      XValues.Name = 'X'
+      XValues.Order = loAscending
+      YValues.Name = 'Y'
+      YValues.Order = loNone
+    end
   end
   object Button2: TButton
     Left = 95

@@ -1,5 +1,5 @@
 object Form1: TForm1
-  Left = 0
+  Left = 41
   Top = 0
   Caption = 'Form1'
   ClientHeight = 502
@@ -11,6 +11,7 @@ object Form1: TForm1
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poDesigned
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   PixelsPerInch = 96

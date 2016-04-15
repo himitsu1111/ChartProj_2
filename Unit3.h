@@ -12,6 +12,7 @@
 #include "TeEngine.hpp"
 #include "TeeProcs.hpp"
 #include <ExtCtrls.hpp>
+#include "Series.hpp"
 
 //---------------------------------------------------------------------------
 class TForm3 : public TForm
@@ -37,10 +38,12 @@ __published:	// IDE-managed Components
 	TButton *Button1;
 	TChart *Chart1;
 	TButton *Button2;
+	TLineSeries *Series1;
 	void __fastcall Button1Click(TObject *Sender);
 	void __fastcall TreeView1MouseDown(TObject *Sender, TMouseButton Button,
           TShiftState Shift, int X, int Y);
 	void __fastcall Button2Click(TObject *Sender);
+	void __fastcall Chart1BeforeDrawAxes(TObject *Sender);
 private:	// User declarations
 public:		// User declarations
 	__fastcall TForm3(TComponent* Owner);

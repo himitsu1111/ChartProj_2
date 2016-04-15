@@ -6,15 +6,35 @@
 #include "Unit3.h"
 #include "Unit2.h"
 #include "Unit1.h"
+
 #include "ShellAPI.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma link "Chart"
 #pragma link "TeEngine"
 #pragma link "TeeProcs"
+#pragma link "Series"
 #pragma resource "*.dfm"
 TForm3 *Form3;
-String pathToFile = "C:\\676";
+String pathToFile = "C:\\676"; //нужна для работы нескольким методам, поэтому глобальная,
+								//а не просто путь содержит
+const cGelt = 4;          //для рисования на канве чарта
+double Gelt[cGelt][2] =
+{ 	//x      y
+	150000,    20,   //правый верхний угол   //прямоугольник
+	0,    		20,    //левый верхний
+	0,    		12,     //левый нижний
+	150000,    12     //правый нижний
+};
+const cKrasn = 4;          //для рисования на канве чарта
+double Krasn[cKrasn][2] =
+{ 	//x      y
+	150000,    30,   //правый верхний угол   //прямоугольник
+	0,    		30,    //левый верхний
+	0,    		20,     //левый нижний
+	150000,    20     //правый нижний
+};
+
 //---------------------------------------------------------------------------
 __fastcall TForm3::TForm3(TComponent* Owner)
 	: TForm(Owner)
@@ -65,7 +85,7 @@ void __fastcall TForm3::TreeView1MouseDown(TObject *Sender, TMouseButton Button,
 {
 	if (TreeView1->GetNodeAt(X,Y)->Text.Pos(".od"))
 	{
-		TStringList* listFromFileOD = new TStringList();
+        TStringList* listFromFileOD = new TStringList();
 		pathToFile = "C:\\676";
 		TTreeNode * TN;
 		TN = TreeView1->GetNodeAt(X,Y);
@@ -86,11 +106,13 @@ void __fastcall TForm3::TreeView1MouseDown(TObject *Sender, TMouseButton Button,
 		0 - спектр типа "_СВС_"
 		1 - канал типа "1_"
 		2 - типа объекта диагн. "Муфта"
-		3 -	fx1, должен быть всегда
-		4 - fx2 либо ""
-		5 - fx3 либо ""
-		6 - результат расчета 1 файла Xls
-		7 - дата этого файла
+		3 - уровень предупреждение
+		4 - уровень авария
+		5 -	fx1, должен быть всегда
+		6 - fx2 либо ""
+		7 - fx3 либо ""
+		8 - результат расчета 1 файла Xls
+		9 - дата этого файла
 		чет - результат расчета
 		нечет - дата
 		*/
@@ -108,23 +130,31 @@ void __fastcall TForm3::TreeView1MouseDown(TObject *Sender, TMouseButton Button,
 		StaticText2->Caption = listFromFileOD->Strings[2];
 		//ТИП ОБЪЕКТА (Муфта)
 
-		StaticText8->Caption = "fx1 = " + listFromFileOD->Strings[3];
+		StaticText8->Caption = "fx1 = " + listFromFileOD->Strings[5];
 		//диагностический признак fx1
 
-		StaticText9->Caption = "fx2 = " + listFromFileOD->Strings[4];
+		StaticText9->Caption = "fx2 = " + listFromFileOD->Strings[6];
 		//диагностический признак fx2
 
-		StaticText10->Caption = "fx3 = " + listFromFileOD->Strings[5];
+		StaticText10->Caption = "fx3 = " + listFromFileOD->Strings[7];
 		//диагностический признак fx3
 
+		StaticText6->Caption = listFromFileOD->Strings[3];
+		//уровень предупреждение
+
+		StaticText7->Caption = listFromFileOD->Strings[4];
+		//уровень авария
+
 		//
-		for (int i = 6; i < listFromFileOD->Count; i++)
+		for (int i = 8; i < listFromFileOD->Count; i++)
 		{
 			ls->AddXY(StrToDate(listFromFileOD->Strings[i+1]),StrToFloat(listFromFileOD->Strings[i]), listFromFileOD->Strings[i+1], clRed);
         	i++;
 		}
 		Form3->Chart1->View3D = false;
 		Form3->Chart1->AddSeries(ls);
+
+		markOfClick = true;
 	}
 }
 //---------------------------------------------------------------------------
@@ -142,8 +172,62 @@ void __fastcall TForm3::Button2Click(TObject *Sender)
 	fStrukt.pFrom = str.c_str();
 	fStrukt.hwnd = 0;
 	fStrukt.fFlags = FOF_ALLOWUNDO;
-	
+
 	SHFileOperation(&fStrukt);
+}
+//---------------------------------------------------------------------------
+
+
+
+void __fastcall TForm3::Chart1BeforeDrawAxes(TObject *Sender)
+{
+
+
+		TPoint yellowLevel[cGelt];
+		TPoint redLevel[cKrasn];
+
+
+		Gelt[1][1] = StrToFloat(StaticText6->Caption);
+		Gelt[0][1] = StrToFloat(StaticText6->Caption);
+
+		for (int i = 0; i < cGelt; ++i)
+		{
+			yellowLevel[i].x = Series1->CalcXPosValue(Gelt[i][0]);
+			yellowLevel[i].y = Series1->CalcYPosValue(Gelt[i][1]);
+		}
+
+		HRGN rg = CreateRectRgn(Chart1->BottomAxis->IStartPos,
+		Chart1->LeftAxis->IStartPos+1,
+		Chart1->BottomAxis->IEndPos,
+		Chart1->LeftAxis->IEndPos);
+		Chart1->Canvas->Brush->Color = TColor(clYellow);
+		Chart1->Canvas->Pen->Color = TColor(clYellow);
+		SelectClipRgn(Chart1->Canvas->Handle, rg);
+		Chart1->Canvas->Polygon(yellowLevel, 4);
+		SelectClipRgn(Chart1->Canvas->Handle, 0);
+		DeleteObject(rg);
+
+		//рисуем второй красный полигон
+		Krasn[1][1] = StrToFloat(StaticText7->Caption);
+		Krasn[0][1] = StrToFloat(StaticText7->Caption);
+
+		for (int i = 0; i < cGelt; ++i)
+		{
+			redLevel[i].x = Series1->CalcXPosValue(Krasn[i][0]);
+			redLevel[i].y = Series1->CalcYPosValue(Krasn[i][1]);
+		}
+
+		HRGN rg2 = CreateRectRgn(Chart1->BottomAxis->IStartPos,
+		Chart1->LeftAxis->IStartPos+1,
+		Chart1->BottomAxis->IEndPos,
+		Chart1->LeftAxis->IEndPos);
+		Chart1->Canvas->Brush->Color = TColor(clMaroon);
+		Chart1->Canvas->Pen->Color = TColor(clMaroon);
+		SelectClipRgn(Chart1->Canvas->Handle, rg2);
+		Chart1->Canvas->Polygon(redLevel, 4);
+		SelectClipRgn(Chart1->Canvas->Handle, 0);
+		DeleteObject(rg2);
+
 }
 //---------------------------------------------------------------------------
 

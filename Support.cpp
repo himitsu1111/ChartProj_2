@@ -115,6 +115,8 @@ void ParserInterface::saveToFile()
 	str->Add(Ranges);
 	str->Add(Channel);
 	str->Add(DiagnObj);
+	str->Add(getLevelWarn());
+	str->Add(getLevelCrash());
 	//---
 	int si = MassFreq.size();
     int si2 = MassFreqCount();

@@ -144,9 +144,12 @@ void __fastcall TForm1::Button3Click(TObject *Sender)
 	}
 
    //	Memo1->Lines->Add("\n");
+    ls->Color = clRed;
 	Form2->Chart1->View3D = false;
-	Form2->Chart1->AddSeries(ls);
+   	Form2->Chart1->AddSeries(ls);
 	Form2->Visible = true;
+	Obj->setLevelWarn(Edit4->Text);
+	Obj->setLevelCrash(Edit5->Text);
 //    delete Obj;
 }
 //---------------------------------------------------------------------------

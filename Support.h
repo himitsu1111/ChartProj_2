@@ -32,9 +32,11 @@ namespace moo
 		String NameDO;
 		std::vector<float> MassFreq; //массив диагностических признаков, частот (либо 1 либо 3, если DaignObj - подшипник)
 		std::vector<PointForChart> ListOfPoints; //массив структур вида (число; число; дата) 7 штук!
-		TStringList * DateList; //список дат (на всякий случай, потом возможно не пригодится)
+		TStringList * LevelList; //список допустимых уровней (на всякий случай, потом возможно не пригодится)
 		TStringList * PathList; //входящий список путей к файлам
 		XlsHelper* M;
+		String levelWarn;  //допустимые уровни, предупреждение и авария
+		String levelCrash;
 
 		int SV;
 
@@ -71,7 +73,12 @@ namespace moo
 		void setPathList(TStringList* a) { PathList = a; };
 		TStringList* getPathList() {return PathList;};
 
-		TStringList* getDateList() { Calculating(); return DateList; };
+	   //	TStringList* getDateList() { Calculating(); return DateList; };
+
+		void setLevelWarn(String s) { levelWarn = s; };
+        String getLevelWarn() {return levelWarn; };
+        void setLevelCrash(String s) { levelCrash = s; };
+        String getLevelCrash() {return levelCrash; };
 
 		bool setMassFreq(float a) { if (MassFreq.size() < 3) { MassFreq.push_back(a); return true; } else return false; } ;
 		std::vector<float> getMassFreq() { return MassFreq; };
