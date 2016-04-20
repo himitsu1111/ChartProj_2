@@ -163,8 +163,6 @@ object Form3: TForm3
     Top = 8
     Width = 414
     Height = 455
-    Title.Text.Strings = (
-      'TChart')
     OnBeforeDrawAxes = Chart1BeforeDrawAxes
     TabOrder = 3
     object Series1: TLineSeries

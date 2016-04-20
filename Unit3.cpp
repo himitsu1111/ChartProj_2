@@ -16,8 +16,9 @@
 #pragma link "Series"
 #pragma resource "*.dfm"
 TForm3 *Form3;
-String pathToFile = "C:\\676"; //нужна для работы нескольким методам, поэтому глобальная,
+String pathToFile = ""; //нужна для работы нескольким методам, поэтому глобальная,
 								//а не просто путь содержит
+
 const cGelt = 4;          //для рисования на канве чарта
 double Gelt[cGelt][2] =
 { 	//x      y
@@ -49,7 +50,7 @@ void __fastcall TForm3::Button1Click(TObject *Sender)
 	TreeView1->Items->Clear();
 	//перва¤ группа нодов
 	ListFilesToo(NULL,
-				 "C:\\676\\");
+				 Form1->StaticText11->Caption);
 
 }
 //---------------------------------------------------------------------------
@@ -86,7 +87,7 @@ void __fastcall TForm3::TreeView1MouseDown(TObject *Sender, TMouseButton Button,
 	if (TreeView1->GetNodeAt(X,Y)->Text.Pos(".od"))
 	{
         TStringList* listFromFileOD = new TStringList();
-		pathToFile = "C:\\676";
+		pathToFile = Form1->StaticText11->Caption.SubString(0,Form1->StaticText11->Caption.Length()-1);
 		TTreeNode * TN;
 		TN = TreeView1->GetNodeAt(X,Y);
 		listFromFileOD->Add("\\" + TN->Text);
@@ -153,8 +154,7 @@ void __fastcall TForm3::TreeView1MouseDown(TObject *Sender, TMouseButton Button,
 		}
 		Form3->Chart1->View3D = false;
 		Form3->Chart1->AddSeries(ls);
-
-		markOfClick = true;
+	  //	Chart1->Title->Text->Strings[0] = "";
 	}
 }
 //---------------------------------------------------------------------------

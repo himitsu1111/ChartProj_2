@@ -15,6 +15,7 @@
 #include "Unit3.h"
 #include "excel_xp_srvr.h"
 #include <OleServer.hpp>
+#include <Dialogs.hpp>
 
 //---------------------------------------------------------------------------
 class TForm1 : public TForm
@@ -44,6 +45,16 @@ __published:	// IDE-managed Components
 	TStaticText *StaticText5;
 	TEdit *Edit6;
 	TExcelApplication *ExcelApplication1;
+	TGroupBox *GroupBox3;
+	TStaticText *StaticText6;
+	TStaticText *StaticText7;
+	TStaticText *StaticText8;
+	TStaticText *StaticText9;
+	TGroupBox *GroupBox4;
+	TComboBox *ComboBox5;
+	TStaticText *StaticText10;
+	TStaticText *StaticText11;
+	TSaveDialog *SaveDialog1;
 
 	void __fastcall FormCreate(TObject *Sender);
 	void __fastcall ComboBox1Change(TObject *Sender);
@@ -58,6 +69,8 @@ __published:	// IDE-managed Components
 	void __fastcall Edit3KeyPress(TObject *Sender, char &Key);
 	void __fastcall FormDestroy(TObject *Sender);
 	void __fastcall Button2Click(TObject *Sender);
+	void __fastcall ComboBox5Change(TObject *Sender);
+	void __fastcall StaticText11Click(TObject *Sender);
 private:	// User declarations
 public:		// User declarations
 	TStringList* ListFiles(const String &DirName);

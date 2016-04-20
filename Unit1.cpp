@@ -18,7 +18,7 @@
 #pragma resource "*.dfm"
 TForm1 *Form1;
 moo::ParserInterface* Obj = new moo::ParserInterface();
-
+String mainPath;
 //moo::ParserInterface* Obj = new moo::ParserInterface();
 //---------------------------------------------------------------------------
 __fastcall TForm1::TForm1(TComponent* Owner)
@@ -51,22 +51,47 @@ TStringList* TForm1::ListFiles(const String &DirName)
 	FindClose(sr);
 	return List;
 }
+//---------------------------------------------------------------------------
 void __fastcall TForm1::FormCreate(TObject *Sender)
 {
 	TStrings* List;
-	String Path = "C:\\676\\";
-	List = ListFiles(Path);
+	TStringList* sl = new TStringList();
+	
+	//проверка существования файла с путем
+	if (!FileExists("path.path"))
+	{
+		sl->Add("C:\\676\\");
+		sl->SaveToFile("path.path");
+	}
+	sl->LoadFromFile("path.path");
+	mainPath = sl->Strings[0];
+	List = ListFiles(mainPath);
 	for (int i = 0; i < List->Count; i++)
-		ComboBox1->Items->Add(List->Strings[i]);
-
+		ComboBox5->Items->Add(List->Strings[i]);
+    StaticText11->Caption = mainPath;
 	Memo1->Lines->Add(List->Text);
 }
+//---------------------------------------------------------------------------
+void __fastcall TForm1::ComboBox5Change(TObject *Sender)
+{
+	//
+    Memo1->Text = "1";
+	TStrings* List;
+	String Path = mainPath + ComboBox5->Items->Strings[ComboBox5->ItemIndex];
+	List = ListFiles(Path);
+	ComboBox1->Clear();
+	for (int i = 0; i < List->Count; i++)
+		ComboBox1->Items->Add(List->Strings[i]);
+}
+
+
 //---------------------------------------------------------------------------
 void __fastcall TForm1::ComboBox1Change(TObject *Sender)
 {
 	Memo1->Text = "1";
 	TStrings* List;
-	String Path = "C:\\676\\" + ComboBox1->Items->Strings[ComboBox1->ItemIndex];
+	String Path = mainPath + ComboBox5->Items->Strings[ComboBox5->ItemIndex] +
+							  "\\" + ComboBox1->Items->Strings[ComboBox1->ItemIndex];
 	List = ListFiles(Path);
 	ComboBox2->Clear();
 	for (int i = 0; i < List->Count; i++)
@@ -77,12 +102,14 @@ void __fastcall TForm1::ComboBox2Change(TObject *Sender)
 {
 	TStrings* List;
 	TStringList* ListOfFiles = new TStringList;
-	String Path = "C:\\676\\" + ComboBox1->Items->Strings[ComboBox1->ItemIndex] +
-				  + "\\" + ComboBox2->Items->Strings[ComboBox2->ItemIndex];
+	String Path = mainPath + ComboBox5->Items->Strings[ComboBox5->ItemIndex] +
+				   "\\" + ComboBox1->Items->Strings[ComboBox1->ItemIndex] + "\\" +
+						ComboBox2->Items->Strings[ComboBox2->ItemIndex];
 	List = ListFiles(Path);
 	int z = List->Count;
     for (int i = 0; i < List->Count; i++)
-		ListOfFiles->Add("C:\\676\\" + ComboBox1->Items->Strings[ComboBox1->ItemIndex] +
+		ListOfFiles->Add(mainPath + ComboBox5->Items->Strings[ComboBox5->ItemIndex] + "\\"
+				+ ComboBox1->Items->Strings[ComboBox1->ItemIndex] 
 				  + "\\" + ComboBox2->Items->Strings[ComboBox2->ItemIndex] + "\\" + List->Strings[i]);
 	Memo1->Lines->Add(ListOfFiles->Text);
 	
@@ -146,7 +173,9 @@ void __fastcall TForm1::Button3Click(TObject *Sender)
    //	Memo1->Lines->Add("\n");
     ls->Color = clRed;
 	Form2->Chart1->View3D = false;
-   	Form2->Chart1->AddSeries(ls);
+	Form2->Chart1->AddSeries(ls);
+	Form2->Chart1->Title->Text->Strings[0] = "";
+	Form2->Caption = ComboBox1->Text + ", " + ComboBox2->Text + ", " + ComboBox3->Text;
 	Form2->Visible = true;
 	Obj->setLevelWarn(Edit4->Text);
 	Obj->setLevelCrash(Edit5->Text);
@@ -207,6 +236,27 @@ void __fastcall TForm1::Button2Click(TObject *Sender)
 	Obj->setNameDO(Edit6->Text);
 	Obj->saveToFile();	
 }
+
 //---------------------------------------------------------------------------
 
+
+void __fastcall TForm1::StaticText11Click(TObject *Sender)
+{
+	//сохранение пути к главной папке
+	if (SaveDialog1->Execute())
+		mainPath = SaveDialog1->FileName;
+	mainPath = mainPath.SubString(0,mainPath.Length()-1);
+	TStringList * sl = new TStringList();
+	sl->Add(mainPath);
+	sl->SaveToFile("path.path");
+
+	TStringList * List;
+	List = ListFiles(mainPath);
+	ComboBox5->Items->Clear();
+	for (int i = 0; i < List->Count; i++)
+		ComboBox5->Items->Add(List->Strings[i]);
+	StaticText11->Caption = mainPath;
+
+}
+//---------------------------------------------------------------------------
 
