@@ -55,6 +55,7 @@ __published:	// IDE-managed Components
 	TStaticText *StaticText10;
 	TStaticText *StaticText11;
 	TSaveDialog *SaveDialog1;
+	TRadioGroup *RadioGroup2;
 
 	void __fastcall FormCreate(TObject *Sender);
 	void __fastcall ComboBox1Change(TObject *Sender);
@@ -71,6 +72,7 @@ __published:	// IDE-managed Components
 	void __fastcall Button2Click(TObject *Sender);
 	void __fastcall ComboBox5Change(TObject *Sender);
 	void __fastcall StaticText11Click(TObject *Sender);
+	void __fastcall RadioGroup2Click(TObject *Sender);
 private:	// User declarations
 public:		// User declarations
 	TStringList* ListFiles(const String &DirName);

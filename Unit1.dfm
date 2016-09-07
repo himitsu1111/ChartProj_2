@@ -130,13 +130,14 @@ object Form1: TForm1
         #1056#1077#1084#1077#1085#1085#1072#1103' '#1087#1077#1088#1077#1076#1072#1095#1072
         #1052#1091#1092#1090#1072
         #1042#1072#1083', '#1096#1087#1080#1085#1076#1077#1083#1100
-        #1069#1083#1077#1082#1090#1088#1086#1076#1074#1080#1075#1072#1090#1077#1083#1100)
+        #1069#1083#1077#1082#1090#1088#1086#1076#1074#1080#1075#1072#1090#1077#1083#1100
+        'RMS')
     end
     object GroupBox1: TGroupBox
       Left = 223
       Top = 14
       Width = 179
-      Height = 202
+      Height = 155
       Caption = #1044#1080#1072#1075#1085#1086#1089#1090#1080#1095#1077#1089#1082#1080#1077' '#1087#1088#1080#1079#1085#1072#1082#1080'  ('#1043#1094')'
       TabOrder = 8
       object Edit1: TEdit
@@ -149,7 +150,7 @@ object Form1: TForm1
       end
       object Edit2: TEdit
         Left = 64
-        Top = 88
+        Top = 78
         Width = 97
         Height = 21
         TabOrder = 1
@@ -157,7 +158,7 @@ object Form1: TForm1
       end
       object Edit3: TEdit
         Left = 64
-        Top = 136
+        Top = 119
         Width = 97
         Height = 21
         TabOrder = 2
@@ -173,7 +174,7 @@ object Form1: TForm1
       end
       object StaticText2: TStaticText
         Left = 15
-        Top = 88
+        Top = 81
         Width = 31
         Height = 17
         Caption = 'fx2 ='
@@ -181,7 +182,7 @@ object Form1: TForm1
       end
       object StaticText3: TStaticText
         Left = 15
-        Top = 136
+        Top = 123
         Width = 31
         Height = 17
         Caption = 'fx3 ='
@@ -189,9 +190,9 @@ object Form1: TForm1
       end
     end
     object GroupBox2: TGroupBox
-      Left = 226
+      Left = 223
       Top = 236
-      Width = 176
+      Width = 179
       Height = 125
       Caption = #1044#1086#1087#1091#1089#1090#1080#1084#1099#1077' '#1091#1088#1086#1074#1085#1080
       TabOrder = 9
@@ -298,6 +299,19 @@ object Form1: TForm1
       Caption = 'StaticText11'
       TabOrder = 17
       OnClick = StaticText11Click
+    end
+    object RadioGroup2: TRadioGroup
+      Left = 223
+      Top = 171
+      Width = 179
+      Height = 63
+      Caption = #1063#1080#1089#1083#1086' '#1083#1080#1085#1080#1081
+      Columns = 2
+      Items.Strings = (
+        '800'
+        '1600')
+      TabOrder = 18
+      OnClick = RadioGroup2Click
     end
   end
   object ExcelApplication1: TExcelApplication

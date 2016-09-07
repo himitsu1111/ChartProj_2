@@ -11,9 +11,10 @@
 
 //---------------------------------------------------------------------------
 using namespace doo;
-XlsHelper::XlsHelper()
+
+XlsHelper::XlsHelper(int a)
 {
-	myRange = 800;
+	myRange = a;
    //	searchingValue = 111.;
 	rangeOfMidValue = 3;
 //	RangeLeft = "A";

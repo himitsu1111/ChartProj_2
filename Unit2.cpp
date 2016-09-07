@@ -20,17 +20,26 @@ double Gelt[cGelt][2] =
 { 	//x      y
 	150000,    20,   //правый верхний угол   //прямоугольник
 	0,    		20,    //левый верхний
-	0,    		12,     //левый нижний
-	150000,    12     //правый нижний
+	0,    		200,     //левый нижний
+	150000,    200     //правый нижний
 };
 const cKrasn = 4;          //для рисования на канве чарта
 double Krasn[cKrasn][2] =
 { 	//x      y
 	150000,    30,   //правый верхний угол   //прямоугольник
 	0,    		30,    //левый верхний
-	0,    		20,     //левый нижний
-	150000,    20     //правый нижний
+	0,    		200,     //левый нижний
+	150000,    200     //правый нижний
 };
+const cZelen = 4;          //для рисования на канве чарта
+double Zelen[cZelen][2] =
+{ 	//x      y
+	150000,    12,   //правый верхний угол   //прямоугольник
+	0,    		12,    //левый верхний
+	0,    		0,     //левый нижний
+	150000,    0     //правый нижний
+};
+
 
 //---------------------------------------------------------------------------
 __fastcall TForm2::TForm2(TComponent* Owner)
@@ -45,9 +54,31 @@ void __fastcall TForm2::Chart1BeforeDrawAxes(TObject *Sender)
 
 //	TLineSeries* SS =new TLineSeries(Form2->Chart1);
 //	SS->CalcXPosValue();
+    TPoint greenLevel[cZelen];
 	TPoint yellowLevel[cGelt];
 	TPoint redLevel[cKrasn];
 
+	
+
+	Zelen[1][1] = StrToFloat(Form1->Edit4->Text);
+	Zelen[0][1] = StrToFloat(Form1->Edit4->Text);
+
+	for (int i = 0; i < cZelen; ++i)
+	{
+		greenLevel[i].x = Series1->CalcXPosValue(Zelen[i][0]);
+		greenLevel[i].y = Series1->CalcYPosValue(Zelen[i][1]);
+	}
+
+	HRGN rg1 = CreateRectRgn(Chart1->BottomAxis->IStartPos,
+	Chart1->LeftAxis->IStartPos+1,
+	Chart1->BottomAxis->IEndPos,
+	Chart1->LeftAxis->IEndPos);
+	Chart1->Canvas->Brush->Color = TColor(clGreen);
+	Chart1->Canvas->Pen->Color = TColor(clGreen);
+	SelectClipRgn(Chart1->Canvas->Handle, rg1);
+	Chart1->Canvas->Polygon(greenLevel, 4);
+	SelectClipRgn(Chart1->Canvas->Handle, 0);
+	DeleteObject(rg1);
 
 //	yellowLevel[0].x = 0;
 //	yellowLevel[1].x = 0;

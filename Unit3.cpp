@@ -6,6 +6,9 @@
 #include "Unit3.h"
 #include "Unit2.h"
 #include "Unit1.h"
+#include "Support.h"
+#include "variables.cpp"
+#include "Math.hpp"
 
 #include "ShellAPI.h"
 //---------------------------------------------------------------------------
@@ -16,6 +19,8 @@
 #pragma link "Series"
 #pragma resource "*.dfm"
 TForm3 *Form3;
+int x1;
+int y1;
 String pathToFile = ""; //нужна для работы нескольким методам, поэтому глобальная,
 								//а не просто путь содержит
 
@@ -24,16 +29,24 @@ double Gelt[cGelt][2] =
 { 	//x      y
 	150000,    20,   //правый верхний угол   //прямоугольник
 	0,    		20,    //левый верхний
-	0,    		12,     //левый нижний
-	150000,    12     //правый нижний
+	0,    		200,     //левый нижний
+	150000,    200     //правый нижний
 };
 const cKrasn = 4;          //для рисования на канве чарта
 double Krasn[cKrasn][2] =
 { 	//x      y
 	150000,    30,   //правый верхний угол   //прямоугольник
 	0,    		30,    //левый верхний
-	0,    		20,     //левый нижний
-	150000,    20     //правый нижний
+	0,    		200,     //левый нижний
+	150000,    200     //правый нижний
+};
+const cZelen = 4;          //для рисования на канве чарта
+double Zelen[cZelen][2] =
+{ 	//x      y
+	150000,    12,   //правый верхний угол   //прямоугольник
+	0,    		12,    //левый верхний
+	0,    		0,     //левый нижний
+	150000,    0     //правый нижний
 };
 
 //---------------------------------------------------------------------------
@@ -66,7 +79,13 @@ void TForm3::ListFilesToo(TTreeNode* TN, const String& DirName)
 			if (TN) //условие для первого звена. решается добавлять потомков первых звеньев или сами первые звенья
 				ListFilesToo( TreeView1->Items->AddChild(TN, sr.Name),  DirName+"\\" + sr.Name);//вызывает сама себя для поиска в подпапках
 			else
-				ListFilesToo( TreeView1->Items->Add(TN, sr.Name),  DirName+"\\" + sr.Name);
+				{
+//					if (DirName.Length() == 6)
+//					{
+//						ListFilesToo( TreeView1->Items->Add(TN, sr.Name)->SelectedIndex = 1, DirName+"\\" + sr.Name);
+//					}
+                    ListFilesToo( TreeView1->Items->Add(TN, sr.Name),  DirName+"\\" + sr.Name);
+				}
 			// List->Add(DirName+"\\" + sr.Name);//добавляет папки
 		}
 		else if (sr.Name.Pos(".od"))// иначе найден файл
@@ -84,9 +103,11 @@ void TForm3::ListFilesToo(TTreeNode* TN, const String& DirName)
 void __fastcall TForm3::TreeView1MouseDown(TObject *Sender, TMouseButton Button,
 	  TShiftState Shift, int X, int Y)
 {
+	x1 = X;
+	y1 = Y;
 	if (TreeView1->GetNodeAt(X,Y)->Text.Pos(".od"))
 	{
-        TStringList* listFromFileOD = new TStringList();
+		TStringList* listFromFileOD = new TStringList();
 		pathToFile = Form1->StaticText11->Caption.SubString(0,Form1->StaticText11->Caption.Length()-1);
 		TTreeNode * TN;
 		TN = TreeView1->GetNodeAt(X,Y);
@@ -105,7 +126,7 @@ void __fastcall TForm3::TreeView1MouseDown(TObject *Sender, TMouseButton Button,
 		/*
 		Структура строк:
 		0 - спектр типа "_СВС_"
-		1 - канал типа "1_"
+		1 - канал типа "1_" + количество линий типа "800 или 1600"
 		2 - типа объекта диагн. "Муфта"
 		3 - уровень предупреждение
 		4 - уровень авария
@@ -125,19 +146,41 @@ void __fastcall TForm3::TreeView1MouseDown(TObject *Sender, TMouseButton Button,
 		StaticText1->Caption = fileName;
 		//НАИМЕНОВАНИЕ(имя файла) добавляется на форму из файла
 
-		StaticText4->Caption = listFromFileOD->Strings[0].SubString(2,3);
+		StaticText4->Caption = listFromFileOD->Strings[0].SubString(2, listFromFileOD->Strings[0].Length() - 2);
 		//СПЕКТР (СВС)
 
 		StaticText2->Caption = listFromFileOD->Strings[2];
 		//ТИП ОБЪЕКТА (Муфта)
 
-		StaticText8->Caption = "fx1 = " + listFromFileOD->Strings[5];
+		if (listFromFileOD->Strings[5].Pos("."))
+		{
+			double D = StrToFloat(listFromFileOD->Strings[5]);
+			D = RoundTo(D , -1);
+			StaticText8->Caption = "fx1 = " + FloatToStr(D);//listFromFileOD->Strings[5].SubString(1, listFromFileOD->Strings[5].Pos(".")+1);
+		}
+		else
+			StaticText8->Caption = "fx1 = " + listFromFileOD->Strings[5];
 		//диагностический признак fx1
 
-		StaticText9->Caption = "fx2 = " + listFromFileOD->Strings[6];
+		if (listFromFileOD->Strings[6].Pos("."))
+		{
+			double D = StrToFloat(listFromFileOD->Strings[6]);
+			D = RoundTo(D , -1);
+			StaticText9->Caption = "fx2 = " + FloatToStr(D);//listFromFileOD->Strings[6].SubString(1, listFromFileOD->Strings[6].Pos(".")+1);
+
+		}
+		else
+			StaticText9->Caption = "fx2 = " + listFromFileOD->Strings[6];
 		//диагностический признак fx2
 
-		StaticText10->Caption = "fx3 = " + listFromFileOD->Strings[7];
+		if (listFromFileOD->Strings[7].Pos("."))
+		{
+			double D = StrToFloat(listFromFileOD->Strings[7]);
+			D = RoundTo(D , -1);
+			StaticText10->Caption = "fx3 = " + FloatToStr(D);//listFromFileOD->Strings[7].SubString(1, listFromFileOD->Strings[7].Pos(".")+1);
+		}
+		else
+            StaticText10->Caption = "fx3 = " + listFromFileOD->Strings[7];
 		//диагностический признак fx3
 
 		StaticText6->Caption = listFromFileOD->Strings[3];
@@ -146,16 +189,28 @@ void __fastcall TForm3::TreeView1MouseDown(TObject *Sender, TMouseButton Button,
 		StaticText7->Caption = listFromFileOD->Strings[4];
 		//уровень авария
 
+		StaticText3->Caption = listFromFileOD->Strings[1].SubString(3, listFromFileOD->Strings[1].Length() - 2);
+		//КАНАЛ и количество линий пересчета 800/1600
 		//
 		for (int i = 8; i < listFromFileOD->Count; i++)
 		{
-			ls->AddXY(StrToDate(listFromFileOD->Strings[i+1]),StrToFloat(listFromFileOD->Strings[i]), listFromFileOD->Strings[i+1], clRed);
+			ls->AddXY(StrToDate(listFromFileOD->Strings[i+1]),StrToFloat(listFromFileOD->Strings[i]), listFromFileOD->Strings[i+1], clBlue);
         	i++;
 		}
+        Form3->Chart1->Title->Text->Strings[0] = "TREND";
 		Form3->Chart1->View3D = false;
 		Form3->Chart1->AddSeries(ls);
 	  //	Chart1->Title->Text->Strings[0] = "";
 	}
+
+	if (TreeView1->GetNodeAt(X,Y)->Text.Length() == 6)
+	{
+		N1->Caption = "Копировать";
+	}
+	else
+        N1->Caption = "Выберите инвентарный";
+
+
 }
 //---------------------------------------------------------------------------
 
@@ -182,9 +237,30 @@ void __fastcall TForm3::Button2Click(TObject *Sender)
 void __fastcall TForm3::Chart1BeforeDrawAxes(TObject *Sender)
 {
 
-
+		TPoint greenLevel[cZelen];
 		TPoint yellowLevel[cGelt];
 		TPoint redLevel[cKrasn];
+
+
+		Zelen[1][1] = StrToFloat(StaticText6->Caption);
+		Zelen[0][1] = StrToFloat(StaticText6->Caption);
+
+		for (int i = 0; i < cZelen; ++i)
+		{
+			greenLevel[i].x = Series1->CalcXPosValue(Zelen[i][0]);
+			greenLevel[i].y = Series1->CalcYPosValue(Zelen[i][1]);
+		}
+
+		HRGN rg1 = CreateRectRgn(Chart1->BottomAxis->IStartPos,
+		Chart1->LeftAxis->IStartPos+1,
+		Chart1->BottomAxis->IEndPos,
+		Chart1->LeftAxis->IEndPos);
+		Chart1->Canvas->Brush->Color = TColor(clGreen);
+		Chart1->Canvas->Pen->Color = TColor(clGreen);
+		SelectClipRgn(Chart1->Canvas->Handle, rg1);
+		Chart1->Canvas->Polygon(greenLevel, 4);
+		SelectClipRgn(Chart1->Canvas->Handle, 0);
+		DeleteObject(rg1);
 
 
 		Gelt[1][1] = StrToFloat(StaticText6->Caption);
@@ -228,6 +304,122 @@ void __fastcall TForm3::Chart1BeforeDrawAxes(TObject *Sender)
 		SelectClipRgn(Chart1->Canvas->Handle, 0);
 		DeleteObject(rg2);
 
+}
+//---------------------------------------------------------------------------
+
+
+void __fastcall TForm3::N2Click(TObject *Sender)
+{                      //вставить+++++++++++++++++
+	TStringList* list = new TStringList();
+    TTreeNode * TN;                                    
+	TN = TreeView1->GetNodeAt(x1,y1);
+	pathToFile = "";
+	list->Add("\\" + TN->Text + "\\");
+    while (TN->Parent)
+	{
+		TN = TN->Parent;
+//			pathToFile = pathToFile + "\\" + TN->Text;
+		list->Add("\\" + TN->Text);
+	}
+	for (int i = list->Count-1; i >= 0; i--)
+		pathToFile += list->Strings[i];
+	pathToFile = Form1->StaticText11->Caption.SubString(0,Form1->StaticText11->Caption.Length()-1) + pathToFile;
+	//это ^ путь к директории В КОТОРОЙ будут создаваться новые файлы ОД с замерами
+
+	TStringList* listXlsFiles = new TStringList();
+	listXlsFiles = Form1->ListFiles(pathToFile);
+	list->Clear();
+	for (int i = 0; i < listXlsFiles->Count; i++)
+		if (listXlsFiles->Strings[i].Pos("xls") && !listXlsFiles->Strings[i].Pos("~$"))
+			list->Add(pathToFile +listXlsFiles->Strings[i]); //теперь тут список путей к Xls файлам
+
+	too::objForMany = new moo::ParserInterface();
+	too::objForMany->setPathList(list);
+		//мега цикл перебора ОД файлов, выбора из них параметров
+		//для просчета, и собственно просчета всех 88 (в тестовом прогоне)
+		//экселевских файлов
+	for (int i = 0; i < too::listFromFileODGlobal->Count; i++)
+	{
+		TStringList* bufferForOdFile = new TStringList();
+		//это список, в который будет загружаться содержимое ОД файла за каждый виток цикла
+		bufferForOdFile->LoadFromFile(too::listFromFileODGlobal->Strings[i]);
+		//теперь тут будет 1 ОД файл, из которого выбираются нужные параметры поиска
+		too::objForMany->setChannel(bufferForOdFile->Strings[1].SubString(1, 1));
+		too::objForMany->setRanges(bufferForOdFile->Strings[0].SubString(2, bufferForOdFile->Strings[0].Length()-2));
+		too::objForMany->setDiagnObj(bufferForOdFile->Strings[2]);
+		too::objForMany->MassFreqClearing();
+		too::objForMany->setMassFreq(StrToFloat(bufferForOdFile->Strings[5]));
+		if (bufferForOdFile->Strings[6] != "")
+			too::objForMany->setMassFreq(StrToFloat(bufferForOdFile->Strings[6]));
+		if (bufferForOdFile->Strings[7] != "")
+			too::objForMany->setMassFreq(StrToFloat(bufferForOdFile->Strings[7]));
+		too::objForMany->setLevelWarn(bufferForOdFile->Strings[3]);
+		too::objForMany->setLevelCrash(bufferForOdFile->Strings[4]);
+		too::objForMany->setFreqBand(StrToInt(bufferForOdFile->Strings[1].SubString(3, bufferForOdFile->Strings[1].Length() - 2)));
+		too::objForMany->getCoordinates();
+		String s2 = too::listODGlobalNames->Strings[i];
+		too::objForMany->setNameDO(too::listODGlobalNames->Strings[i] + "(c)");
+		too::objForMany->saveToFile();
+
+		//отладочные переменные-------------
+		int z = bufferForOdFile->Strings[0].Length()-1;
+		String s = bufferForOdFile->Strings[0].SubString(2, bufferForOdFile->Strings[0].Length()-2);
+		
+		//----------------------------------end-
+	}
+		
+	//
+	//тут должна быть функция, организующая перебор файлов .xls по параметрам, заданным
+	//в файлах .od, в директории, в которую осуществляется вставка
+
+
+
+	
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm3::N1Click(TObject *Sender)
+{                     //копировать ++++++++++++++++++++++++++++++++
+
+   // too::objForMany->setPathList(); //установка путей к xls файлам для пересчета
+	//
+	pathToFile = "";
+	TStringList* listFromFileOD = new TStringList();
+	TStringList* listFilesOD = new TStringList();
+	TTreeNode * TN;                                    
+	TN = TreeView1->GetNodeAt(x1,y1);
+	listFromFileOD->Add("\\" + TN->Text);
+	String fileName = TN->Text.SubString(0, TN->Text.Pos(".")-1); //имя файла с замером
+	while (TN->Parent)
+	{
+		TN = TN->Parent;
+//			pathToFile = pathToFile + "\\" + TN->Text;
+		listFromFileOD->Add("\\" + TN->Text);
+	}
+	for (int i = listFromFileOD->Count-1; i >= 0; i--)
+		pathToFile += listFromFileOD->Strings[i];
+	pathToFile = Form1->StaticText11->Caption.SubString(0,Form1->StaticText11->Caption.Length()-1) + pathToFile;
+	too::listODGlobalNames = new TStringList();
+	listFromFileOD->Clear();
+	listFilesOD = Form1->ListFiles(pathToFile);
+	
+	for (int i = 0; i < listFilesOD->Count; i++)
+		if (listFilesOD->Strings[i].Pos(".od"))
+		{
+			listFromFileOD->Add(pathToFile + "\\" +listFilesOD->Strings[i]); //теперь тут список od файлов
+			too::listODGlobalNames->Add(listFilesOD->Strings[i]);
+		}
+	too::listFromFileODGlobal = listFromFileOD;
+//	String s = too::listFromFileODGlobal->Strings[0];
+//	String s1 = too::listODGlobalNames->Strings[0];
+	 //состав файла .od
+   //	String s = TreeView1->GetNodeAt(x1,y1)->Text;
+
+	//тут должно быть занесение в массив данных информации
+	//о всех замерах(объектах диагностики), для последующего пересчета
+
+	//задача на завтра - сделать читалку од файлов (ещё раз)
+	//и добавить 800 и 1600 в од файл и на форму3
 }
 //---------------------------------------------------------------------------
 

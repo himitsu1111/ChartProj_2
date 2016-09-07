@@ -37,6 +37,7 @@ namespace moo
 		XlsHelper* M;
 		String levelWarn;  //допустимые уровни, предупреждение и авария
 		String levelCrash;
+		int freqBand; //диапазон частот. может равняться 800 || 1600
 
 		int SV;
 
@@ -94,7 +95,11 @@ namespace moo
 			//возвращает путь к файлам Xls. ориентируется по пути к первому файлу,
 			//потому что файлы все должны быть по одному пути
 
-        TStringList* getListOfPoints();//возвращает строки с содержимым вектора ListOfFiles
+		TStringList* getListOfPoints();//возвращает строки с содержимым вектора ListOfFiles
+
+		void setFreqBand(int a) { freqBand = a;};
+		String getFreqBand() { return IntToStr(freqBand);}; //возвращает количество строк анализа 800 или 1600
+
 	};
 	String ParserInterface::Channel = "2_";
 	String ParserInterface::Ranges = "_СВС_";

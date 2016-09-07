@@ -46,7 +46,7 @@ void ParserInterface::Calculating()
 std::vector<float> ParserInterface::CalcDiagnParam(TStringList* L)
 {
 	std::vector<float> result;
-	M = new XlsHelper;
+	M = new XlsHelper(freqBand);
 	float ReturningVal;
 	for (int i = 0; i < L->Count; i++)
 	{
@@ -84,7 +84,7 @@ std::vector<float> ParserInterface::CalcDiagnParam(TStringList* L)
 			result.push_back(ReturningVal);
 		}
 
-		if (DiagnObj.Pos("лектродвигат"))
+		if (DiagnObj.Pos("лектродвигат") || DiagnObj.Pos("RMS"))
 		{
 			ReturningVal = M->MakeSqrtSum(L->Strings[i]);
 			result.push_back(ReturningVal);
@@ -113,17 +113,17 @@ void ParserInterface::saveToFile()
 {
 	TStringList * str = new TStringList();
 	str->Add(Ranges);
-	str->Add(Channel);
+	str->Add(Channel + freqBand);
 	str->Add(DiagnObj);
 	str->Add(getLevelWarn());
 	str->Add(getLevelCrash());
 	//---
-	int si = MassFreq.size();
-    int si2 = MassFreqCount();
-	float x1 = MassFreq[0];
-	float x2 = MassFreq[1];
-	float x3 = MassFreq[2];
-	float x4 = MassFreq[3];
+//	int si = MassFreq.size();
+//    int si2 = MassFreqCount();
+//	float x1 = MassFreq[0];
+//	float x2 = MassFreq[1];
+//	float x3 = MassFreq[2];
+//	float x4 = MassFreq[3];
 	//---
 	if (MassFreq.size() > 1)
 	{
@@ -131,17 +131,21 @@ void ParserInterface::saveToFile()
 		str->Add(FloatToStr(MassFreq[1]));
 		str->Add(FloatToStr(MassFreq[2]));
 	}
-	else
+	else 
 	{
-		str->Add(FloatToStr(MassFreq[0]));
+		if (MassFreq.size() == 0)
+            str->Add("");
+		else
+			str->Add(FloatToStr(MassFreq[0]));
 		str->Add("");
 		str->Add("");
 	}
-
+    //сделать условие для отсутствия частот ^^^
 	TStringList * buf = getListOfPoints();
 	for (int i = 0; i < buf->Count; i++)
 		str->Add(buf->Strings[i]);
 	//str->Add(Ranges);
+	
 	str->SaveToFile(getPathToSave() + NameDO +".od");
 }
 String ParserInterface::getPathToSave()

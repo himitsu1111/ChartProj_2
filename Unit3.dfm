@@ -11,36 +11,29 @@ object Form3: TForm3
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Visible = True
   PixelsPerInch = 96
   TextHeight = 13
   object GroupBox1: TGroupBox
     Left = 183
     Top = 8
-    Width = 314
+    Width = 199
     Height = 459
     TabOrder = 0
     object GroupBox2: TGroupBox
-      Left = 16
+      Left = 8
       Top = 71
-      Width = 289
-      Height = 122
+      Width = 182
+      Height = 66
       Caption = #1054#1087#1080#1089#1072#1085#1080#1077' '#1086#1073#1098#1077#1082#1090#1072
       TabOrder = 0
       object StaticText2: TStaticText
         Left = 16
         Top = 24
-        Width = 178
+        Width = 162
         Height = 17
         Caption = #1058#1080#1087' '#1086#1073#1098#1077#1082#1090#1072'('#1087#1086#1076#1096#1080#1087#1085#1080#1082' '#1082#1072#1095#1077#1085#1080#1103')'
         TabOrder = 0
-      end
-      object StaticText3: TStaticText
-        Left = 16
-        Top = 56
-        Width = 265
-        Height = 17
-        Caption = #1055#1088#1086#1094#1077#1089#1089' '#1086#1073#1088#1072#1073#1086#1090#1082#1080' ('#1085#1072#1088#1091#1096#1077#1085#1080#1077' '#1088#1077#1078#1080#1084#1086#1074' '#1080#1080#1083' '#1091#1076#1072#1088')'
-        TabOrder = 1
       end
       object StaticText5: TStaticText
         Left = 16
@@ -48,13 +41,13 @@ object Form3: TForm3
         Width = 135
         Height = 17
         Caption = #1054#1073#1097#1080#1081' '#1091#1088#1086#1074#1077#1085#1100' '#1074#1080#1073#1088#1072#1094#1080#1080
-        TabOrder = 2
+        TabOrder = 1
       end
     end
     object GroupBox3: TGroupBox
-      Left = 16
+      Left = 8
       Top = 9
-      Width = 289
+      Width = 182
       Height = 56
       Caption = #1053#1072#1080#1084#1077#1085#1086#1074#1072#1085#1080#1077
       TabOrder = 1
@@ -68,9 +61,9 @@ object Form3: TForm3
       end
     end
     object GroupBox4: TGroupBox
-      Left = 16
-      Top = 199
-      Width = 289
+      Left = 8
+      Top = 143
+      Width = 182
       Height = 59
       Caption = #1057#1087#1077#1082#1090#1088
       TabOrder = 2
@@ -84,59 +77,90 @@ object Form3: TForm3
       end
     end
     object GroupBox5: TGroupBox
-      Left = 16
-      Top = 264
-      Width = 289
+      Left = 8
+      Top = 207
+      Width = 182
       Height = 65
       Caption = #1044#1086#1087#1091#1089#1090#1080#1084#1099#1077' '#1091#1088#1086#1074#1085#1080
       TabOrder = 3
       object StaticText6: TStaticText
-        Left = 16
-        Top = 32
+        Left = 8
+        Top = 35
         Width = 20
         Height = 17
         Caption = '0.1'
         TabOrder = 0
       end
       object StaticText7: TStaticText
-        Left = 160
-        Top = 32
+        Left = 112
+        Top = 35
         Width = 20
         Height = 17
         Caption = '0.1'
         TabOrder = 1
       end
+      object StaticText11: TStaticText
+        Left = 8
+        Top = 17
+        Width = 93
+        Height = 17
+        Caption = #1055#1088#1077#1076#1091#1087#1088#1077#1078#1076#1077#1085#1080#1077
+        TabOrder = 2
+      end
+      object StaticText12: TStaticText
+        Left = 112
+        Top = 17
+        Width = 41
+        Height = 17
+        Caption = #1040#1074#1072#1088#1080#1103
+        TabOrder = 3
+      end
     end
     object GroupBox6: TGroupBox
-      Left = 16
-      Top = 335
-      Width = 289
-      Height = 58
+      Left = 8
+      Top = 287
+      Width = 182
+      Height = 99
       Caption = #1044#1080#1072#1075#1085#1086#1089#1090#1080#1095#1077#1089#1082#1080#1077' '#1087#1088#1080#1079#1085#1072#1082#1080
       TabOrder = 4
       object StaticText8: TStaticText
-        Left = 16
-        Top = 32
+        Left = 12
+        Top = 24
         Width = 25
         Height = 17
         Caption = 'fx ='
         TabOrder = 0
       end
       object StaticText9: TStaticText
-        Left = 112
-        Top = 32
+        Left = 12
+        Top = 47
         Width = 25
         Height = 17
         Caption = 'fx ='
         TabOrder = 1
       end
       object StaticText10: TStaticText
-        Left = 208
-        Top = 32
+        Left = 12
+        Top = 70
         Width = 25
         Height = 17
         Caption = 'fx ='
         TabOrder = 2
+      end
+    end
+    object GroupBox7: TGroupBox
+      Left = 8
+      Top = 392
+      Width = 182
+      Height = 55
+      Caption = #1063#1080#1089#1083#1086' '#1083#1080#1085#1080#1081
+      TabOrder = 5
+      object StaticText3: TStaticText
+        Left = 12
+        Top = 24
+        Width = 4
+        Height = 4
+        TabOrder = 0
       end
     end
   end
@@ -146,6 +170,7 @@ object Form3: TForm3
     Width = 177
     Height = 417
     Indent = 19
+    PopupMenu = PopupMenu1
     TabOrder = 1
     OnMouseDown = TreeView1MouseDown
   end
@@ -159,10 +184,12 @@ object Form3: TForm3
     OnClick = Button1Click
   end
   object Chart1: TChart
-    Left = 503
+    Left = 388
     Top = 8
-    Width = 414
+    Width = 529
     Height = 455
+    Title.Text.Strings = (
+      'TChart')
     OnBeforeDrawAxes = Chart1BeforeDrawAxes
     TabOrder = 3
     object Series1: TLineSeries
@@ -185,5 +212,17 @@ object Form3: TForm3
     Caption = #1059#1076#1072#1083#1080#1090#1100
     TabOrder = 4
     OnClick = Button2Click
+  end
+  object PopupMenu1: TPopupMenu
+    Left = 136
+    Top = 336
+    object N1: TMenuItem
+      Caption = #1050#1086#1087#1080#1088#1086#1074#1072#1090#1100
+      OnClick = N1Click
+    end
+    object N2: TMenuItem
+      Caption = #1042#1089#1090#1072#1074#1080#1090#1100
+      OnClick = N2Click
+    end
   end
 end

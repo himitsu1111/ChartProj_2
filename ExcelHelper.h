@@ -34,7 +34,7 @@ namespace doo
 
 
 		public:
-		XlsHelper();
+		XlsHelper(int);
 		~XlsHelper();
 		std::vector<float> MakeMas(AnsiString, float); //возвращает вектор из 7 значений
 											//выбранных из 800. каждый раз обращается к Xls

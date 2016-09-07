@@ -6,6 +6,7 @@
 #include "Unit1.h"
 #include "Support.h"
 #include "Unit2.h"
+#include "variables.cpp"
 
 
 //---------------------------------------------------------------------------
@@ -18,7 +19,7 @@
 #pragma resource "*.dfm"
 TForm1 *Form1;
 moo::ParserInterface* Obj = new moo::ParserInterface();
-String mainPath;
+//String mainPath;
 //moo::ParserInterface* Obj = new moo::ParserInterface();
 //---------------------------------------------------------------------------
 __fastcall TForm1::TForm1(TComponent* Owner)
@@ -63,12 +64,13 @@ void __fastcall TForm1::FormCreate(TObject *Sender)
 		sl->Add("C:\\676\\");
 		sl->SaveToFile("path.path");
 	}
+
 	sl->LoadFromFile("path.path");
-	mainPath = sl->Strings[0];
-	List = ListFiles(mainPath);
+	too::mainPath = sl->Strings[0];
+	List = ListFiles(too::mainPath);
 	for (int i = 0; i < List->Count; i++)
 		ComboBox5->Items->Add(List->Strings[i]);
-    StaticText11->Caption = mainPath;
+	StaticText11->Caption = too::mainPath;
 	Memo1->Lines->Add(List->Text);
 }
 //---------------------------------------------------------------------------
@@ -77,7 +79,7 @@ void __fastcall TForm1::ComboBox5Change(TObject *Sender)
 	//
     Memo1->Text = "1";
 	TStrings* List;
-	String Path = mainPath + ComboBox5->Items->Strings[ComboBox5->ItemIndex];
+	String Path = too::mainPath + ComboBox5->Items->Strings[ComboBox5->ItemIndex];
 	List = ListFiles(Path);
 	ComboBox1->Clear();
 	for (int i = 0; i < List->Count; i++)
@@ -88,9 +90,9 @@ void __fastcall TForm1::ComboBox5Change(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TForm1::ComboBox1Change(TObject *Sender)
 {
-	Memo1->Text = "1";
+	Memo1->Text = "2";
 	TStrings* List;
-	String Path = mainPath + ComboBox5->Items->Strings[ComboBox5->ItemIndex] +
+	String Path = too::mainPath + ComboBox5->Items->Strings[ComboBox5->ItemIndex] +
 							  "\\" + ComboBox1->Items->Strings[ComboBox1->ItemIndex];
 	List = ListFiles(Path);
 	ComboBox2->Clear();
@@ -102,13 +104,13 @@ void __fastcall TForm1::ComboBox2Change(TObject *Sender)
 {
 	TStrings* List;
 	TStringList* ListOfFiles = new TStringList;
-	String Path = mainPath + ComboBox5->Items->Strings[ComboBox5->ItemIndex] +
+	String Path = too::mainPath + ComboBox5->Items->Strings[ComboBox5->ItemIndex] +
 				   "\\" + ComboBox1->Items->Strings[ComboBox1->ItemIndex] + "\\" +
 						ComboBox2->Items->Strings[ComboBox2->ItemIndex];
 	List = ListFiles(Path);
 	int z = List->Count;
     for (int i = 0; i < List->Count; i++)
-		ListOfFiles->Add(mainPath + ComboBox5->Items->Strings[ComboBox5->ItemIndex] + "\\"
+		ListOfFiles->Add(too::mainPath + ComboBox5->Items->Strings[ComboBox5->ItemIndex] + "\\"
 				+ ComboBox1->Items->Strings[ComboBox1->ItemIndex] 
 				  + "\\" + ComboBox2->Items->Strings[ComboBox2->ItemIndex] + "\\" + List->Strings[i]);
 	Memo1->Lines->Add(ListOfFiles->Text);
@@ -118,27 +120,14 @@ void __fastcall TForm1::ComboBox2Change(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TForm1::Button1Click(TObject *Sender)
 {
-//	TStringList* ListOfFiles = new TStringList;
-//	String Path = "C:\\676\\" + ComboBox1->Items->Strings[ComboBox1->ItemIndex] +
-//				  + "\\" + ComboBox2->Items->Strings[ComboBox2->ItemIndex];
-//	List = ListFiles(Path);
-
-  //	moo::ParserInterface* Obj2 = new moo::ParserInterface();
-
-	//Obj->setChannel("asdasd");
-	//Memo1->Text = Obj->getChannel();
-	//Obj->setChannel("test");
-  //	Obj->setChannel("test");
 	Form3->Visible = true;
-
-
 }
 //---------------------------------------------------------------------------
 
 
 void __fastcall TForm1::RadioGroup1Click(TObject *Sender)
 {
-	Obj->setChannel(IntToStr(RadioGroup1->ItemIndex+1));	
+	Obj->setChannel(IntToStr(RadioGroup1->ItemIndex+1));
 }
 //---------------------------------------------------------------------------
 
@@ -150,7 +139,9 @@ void __fastcall TForm1::ComboBox3Change(TObject *Sender)
 
 void __fastcall TForm1::Button3Click(TObject *Sender)
 {
-
+		 //ÃËÀÂÍÀß ÊÍÎÏÊÀ ÏÎ ÊÎÒÎÐÎÉ ÇÀÏÓÑÊÀÅÒÑß ÂÑ¨ ÄÅËÎ
+		 //----------------------------------------------
+		 
    //	Memo1->Text = Obj->getCoordinates()[0].Date;
 	std::vector<moo::PointForChart> VPFC = Obj->getCoordinates();
 //	String a1 = VPFC[0].Date;
@@ -167,11 +158,11 @@ void __fastcall TForm1::Button3Click(TObject *Sender)
 //        Memo1->Lines->Add(VPFC[i].Date);
 //		Memo1->Lines->Add(VPFC[i].B);
 
-		ls->AddXY(StrToDate(VPFC[i].Date),VPFC[i].B, VPFC[i].Date, clRed);
+		ls->AddXY(StrToDate(VPFC[i].Date),VPFC[i].B, VPFC[i].Date, clBlue);
 	}
 
    //	Memo1->Lines->Add("\n");
-    ls->Color = clRed;
+    ls->Color = clBlue;
 	Form2->Chart1->View3D = false;
 	Form2->Chart1->AddSeries(ls);
 	Form2->Chart1->Title->Text->Strings[0] = "";
@@ -244,19 +235,33 @@ void __fastcall TForm1::StaticText11Click(TObject *Sender)
 {
 	//ñîõðàíåíèå ïóòè ê ãëàâíîé ïàïêå
 	if (SaveDialog1->Execute())
-		mainPath = SaveDialog1->FileName;
-	mainPath = mainPath.SubString(0,mainPath.Length()-1);
+		too::mainPath = SaveDialog1->FileName;
+	too::mainPath = too::mainPath.SubString(0,too::mainPath.Length()-1);
 	TStringList * sl = new TStringList();
-	sl->Add(mainPath);
+	sl->Add(too::mainPath);
 	sl->SaveToFile("path.path");
 
 	TStringList * List;
-	List = ListFiles(mainPath);
+	List = ListFiles(too::mainPath);
 	ComboBox5->Items->Clear();
 	for (int i = 0; i < List->Count; i++)
 		ComboBox5->Items->Add(List->Strings[i]);
-	StaticText11->Caption = mainPath;
+	StaticText11->Caption = too::mainPath;
 
 }
 //---------------------------------------------------------------------------
+
+
+void __fastcall TForm1::RadioGroup2Click(TObject *Sender)
+{                         //äîáàâëåíèå äèàïàçîíà 800-1600
+	int i = RadioGroup2->ItemIndex;
+	if (RadioGroup2->ItemIndex != -1)
+	{
+		Obj->setFreqBand((RadioGroup2->ItemIndex+1)*800);
+	}
+
+}
+//---------------------------------------------------------------------------
+
+
 

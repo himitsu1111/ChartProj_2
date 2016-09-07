@@ -13,6 +13,7 @@
 #include "TeeProcs.hpp"
 #include <ExtCtrls.hpp>
 #include "Series.hpp"
+#include <Menus.hpp>
 
 //---------------------------------------------------------------------------
 class TForm3 : public TForm
@@ -23,11 +24,9 @@ __published:	// IDE-managed Components
 	TStaticText *StaticText2;
 	TGroupBox *GroupBox2;
 	TGroupBox *GroupBox3;
-	TStaticText *StaticText3;
 	TTreeView *TreeView1;
 	TGroupBox *GroupBox4;
 	TStaticText *StaticText4;
-	TStaticText *StaticText5;
 	TGroupBox *GroupBox5;
 	TStaticText *StaticText6;
 	TStaticText *StaticText7;
@@ -39,11 +38,21 @@ __published:	// IDE-managed Components
 	TChart *Chart1;
 	TButton *Button2;
 	TLineSeries *Series1;
+	TStaticText *StaticText5;
+	TPopupMenu *PopupMenu1;
+	TMenuItem *N1;
+	TMenuItem *N2;
+	TGroupBox *GroupBox7;
+	TStaticText *StaticText3;
+	TStaticText *StaticText11;
+	TStaticText *StaticText12;
 	void __fastcall Button1Click(TObject *Sender);
 	void __fastcall TreeView1MouseDown(TObject *Sender, TMouseButton Button,
           TShiftState Shift, int X, int Y);
 	void __fastcall Button2Click(TObject *Sender);
 	void __fastcall Chart1BeforeDrawAxes(TObject *Sender);
+	void __fastcall N2Click(TObject *Sender);
+	void __fastcall N1Click(TObject *Sender);
 private:	// User declarations
 public:		// User declarations
 	__fastcall TForm3(TComponent* Owner);
