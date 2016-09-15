@@ -142,7 +142,9 @@ void __fastcall TForm3::TreeView1MouseDown(TObject *Sender, TMouseButton Button,
 		Form3->Chart1->SeriesList->Clear(); //удаляет отработанные серии, очищает график
 
 		TLineSeries* ls = new TLineSeries(Form3->Chart1);
-
+        TLineSeries* ls2 = new TLineSeries(Form3->Chart1);
+		Form3->Chart1->AddSeries(ls);
+	   	Form3->Chart1->AddSeries(ls2);
 		StaticText1->Caption = fileName;
 		//НАИМЕНОВАНИЕ(имя файла) добавляется на форму из файла
 
@@ -195,7 +197,9 @@ void __fastcall TForm3::TreeView1MouseDown(TObject *Sender, TMouseButton Button,
 		for (int i = 8; i < listFromFileOD->Count; i++)
 		{
 			ls->AddXY(StrToDate(listFromFileOD->Strings[i+1]),StrToFloat(listFromFileOD->Strings[i]), listFromFileOD->Strings[i+1], clBlue);
-        	i++;
+			ls2->AddXY(StrToDate(listFromFileOD->Strings[i+1]), 0.05*i, "test",clRed);
+			ls2->AddXY(StrToDate(listFromFileOD->Strings[i+1]), 0.09*i, "test",clRed);
+			i++;
 		}
         Form3->Chart1->Title->Text->Strings[0] = "TREND";
 		Form3->Chart1->View3D = false;
@@ -205,11 +209,12 @@ void __fastcall TForm3::TreeView1MouseDown(TObject *Sender, TMouseButton Button,
 
 	if (TreeView1->GetNodeAt(X,Y)->Text.Length() == 6)
 	{
+        N1->Visible = true;
 		N1->Caption = "Копировать";
 	}
 	else
-        N1->Caption = "Выберите инвентарный";
-
+	   // N1->Caption = "Выберите инвентарный";
+	   N1->Visible = false;
 
 }
 //---------------------------------------------------------------------------
@@ -362,8 +367,8 @@ void __fastcall TForm3::N2Click(TObject *Sender)
 		too::objForMany->saveToFile();
 
 		//отладочные переменные-------------
-		int z = bufferForOdFile->Strings[0].Length()-1;
-		String s = bufferForOdFile->Strings[0].SubString(2, bufferForOdFile->Strings[0].Length()-2);
+	 //	int z = bufferForOdFile->Strings[0].Length()-1;
+	 //	String s = bufferForOdFile->Strings[0].SubString(2, bufferForOdFile->Strings[0].Length()-2);
 		
 		//----------------------------------end-
 	}
@@ -386,7 +391,7 @@ void __fastcall TForm3::N1Click(TObject *Sender)
 	pathToFile = "";
 	TStringList* listFromFileOD = new TStringList();
 	TStringList* listFilesOD = new TStringList();
-	TTreeNode * TN;                                    
+	TTreeNode * TN;
 	TN = TreeView1->GetNodeAt(x1,y1);
 	listFromFileOD->Add("\\" + TN->Text);
 	String fileName = TN->Text.SubString(0, TN->Text.Pos(".")-1); //имя файла с замером
@@ -399,7 +404,7 @@ void __fastcall TForm3::N1Click(TObject *Sender)
 	for (int i = listFromFileOD->Count-1; i >= 0; i--)
 		pathToFile += listFromFileOD->Strings[i];
 	pathToFile = Form1->StaticText11->Caption.SubString(0,Form1->StaticText11->Caption.Length()-1) + pathToFile;
-	too::listODGlobalNames = new TStringList();
+	too::listODGlobalNames = new TStringList(); //это список ТОЛЬКО ИМЕН од файлов для удобства
 	listFromFileOD->Clear();
 	listFilesOD = Form1->ListFiles(pathToFile);
 	
@@ -415,11 +420,56 @@ void __fastcall TForm3::N1Click(TObject *Sender)
 	 //состав файла .od
    //	String s = TreeView1->GetNodeAt(x1,y1)->Text;
 
-	//тут должно быть занесение в массив данных информации
-	//о всех замерах(объектах диагностики), для последующего пересчета
+}
+//---------------------------------------------------------------------------
 
-	//задача на завтра - сделать читалку од файлов (ещё раз)
-	//и добавить 800 и 1600 в од файл и на форму3
+
+void __fastcall TForm3::Button3Click(TObject *Sender)
+{
+		//
+	Form1->Visible = true;	
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm3::N3Click(TObject *Sender)
+{    //копировать несколько ++++++++++++++++++++++
+	Form3->N1->Click(); //прогон нужен для заполнения too::listODGlobalNames
+	// тут будет выборка ОД файлов, которые отмечены галочкой в ЧекЛистБоксе
+    CheckListBox1->Clear();
+	CheckListBox1->Visible = true;
+	Button4->Visible = true;
+	TTreeNode * TN;
+	TN = TreeView1->GetNodeAt(x1,y1)->getFirstChild();
+
+	for (int i = 0; i < too::listODGlobalNames->Count; i++)
+		CheckListBox1->Items->Add(too::listODGlobalNames->Strings[i]);
+
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm3::Button4Click(TObject *Sender)
+{
+	//тут будет корректировка списка ОД файлов
+	//обоих списков, путей и просто названий
+	CheckListBox1->Visible = false;
+	Button4->Visible = false;
+	TStringList* bufferListODpath = new TStringList();
+	TStringList* bufferListODname = new TStringList();
+	for (int i = 0; i < too::listFromFileODGlobal->Count; i++)
+	{
+		if (CheckListBox1->Checked[i])
+		{
+			bufferListODpath->Add(too::listFromFileODGlobal->Strings[i]);
+			bufferListODname->Add(too::listODGlobalNames->Strings[i]);
+		}
+	}
+	if (bufferListODpath->Count)
+	{
+		too::listFromFileODGlobal = bufferListODpath;
+		too::listODGlobalNames = bufferListODname;
+	}
+	
+	// CheckListBox1->Checked[i];
 }
 //---------------------------------------------------------------------------
 

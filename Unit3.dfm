@@ -30,7 +30,7 @@ object Form3: TForm3
       object StaticText2: TStaticText
         Left = 16
         Top = 24
-        Width = 162
+        Width = 178
         Height = 17
         Caption = #1058#1080#1087' '#1086#1073#1098#1077#1082#1090#1072'('#1087#1086#1076#1096#1080#1087#1085#1080#1082' '#1082#1072#1095#1077#1085#1080#1103')'
         TabOrder = 0
@@ -166,9 +166,9 @@ object Form3: TForm3
   end
   object TreeView1: TTreeView
     Left = 0
-    Top = 8
+    Top = 31
     Width = 177
-    Height = 417
+    Height = 401
     Indent = 19
     PopupMenu = PopupMenu1
     TabOrder = 1
@@ -213,16 +213,48 @@ object Form3: TForm3
     TabOrder = 4
     OnClick = Button2Click
   end
+  object Button3: TButton
+    Left = 3
+    Top = 2
+    Width = 75
+    Height = 24
+    Caption = #1057#1086#1079#1076#1072#1090#1100' '#1054#1044
+    TabOrder = 5
+    OnClick = Button3Click
+  end
+  object CheckListBox1: TCheckListBox
+    Left = 0
+    Top = 31
+    Width = 177
+    Height = 218
+    ItemHeight = 13
+    TabOrder = 6
+    Visible = False
+  end
+  object Button4: TButton
+    Left = 3
+    Top = 251
+    Width = 75
+    Height = 21
+    Caption = #1050#1086#1087#1080#1088#1086#1074#1072#1090#1100
+    TabOrder = 7
+    Visible = False
+    OnClick = Button4Click
+  end
   object PopupMenu1: TPopupMenu
     Left = 136
     Top = 336
-    object N1: TMenuItem
-      Caption = #1050#1086#1087#1080#1088#1086#1074#1072#1090#1100
-      OnClick = N1Click
-    end
     object N2: TMenuItem
       Caption = #1042#1089#1090#1072#1074#1080#1090#1100
       OnClick = N2Click
+    end
+    object N1: TMenuItem
+      Caption = #1050#1086#1087#1080#1088#1086#1074#1072#1090#1100' '#1074#1089#1077
+      OnClick = N1Click
+    end
+    object N3: TMenuItem
+      Caption = #1050#1086#1087#1080#1088#1086#1074#1072#1090#1100' '#1085#1077#1089#1082#1086#1083#1100#1082#1086
+      OnClick = N3Click
     end
   end
 end

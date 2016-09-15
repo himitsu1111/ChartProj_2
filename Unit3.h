@@ -14,6 +14,7 @@
 #include <ExtCtrls.hpp>
 #include "Series.hpp"
 #include <Menus.hpp>
+#include <CheckLst.hpp>
 
 //---------------------------------------------------------------------------
 class TForm3 : public TForm
@@ -46,6 +47,10 @@ __published:	// IDE-managed Components
 	TStaticText *StaticText3;
 	TStaticText *StaticText11;
 	TStaticText *StaticText12;
+	TButton *Button3;
+	TCheckListBox *CheckListBox1;
+	TMenuItem *N3;
+	TButton *Button4;
 	void __fastcall Button1Click(TObject *Sender);
 	void __fastcall TreeView1MouseDown(TObject *Sender, TMouseButton Button,
           TShiftState Shift, int X, int Y);
@@ -53,6 +58,9 @@ __published:	// IDE-managed Components
 	void __fastcall Chart1BeforeDrawAxes(TObject *Sender);
 	void __fastcall N2Click(TObject *Sender);
 	void __fastcall N1Click(TObject *Sender);
+	void __fastcall Button3Click(TObject *Sender);
+	void __fastcall N3Click(TObject *Sender);
+	void __fastcall Button4Click(TObject *Sender);
 private:	// User declarations
 public:		// User declarations
 	__fastcall TForm3(TComponent* Owner);
