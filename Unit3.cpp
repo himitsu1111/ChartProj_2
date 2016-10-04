@@ -69,6 +69,7 @@ void __fastcall TForm3::Button1Click(TObject *Sender)
 //---------------------------------------------------------------------------
 void TForm3::ListFilesToo(TTreeNode* TN, const String& DirName)
 {
+    
 	TSearchRec sr;
 	if (!FindFirst(DirName+"\\*.*", faAnyFile, sr))
 	do
@@ -84,7 +85,7 @@ void TForm3::ListFilesToo(TTreeNode* TN, const String& DirName)
 //					{
 //						ListFilesToo( TreeView1->Items->Add(TN, sr.Name)->SelectedIndex = 1, DirName+"\\" + sr.Name);
 //					}
-                    ListFilesToo( TreeView1->Items->Add(TN, sr.Name),  DirName+"\\" + sr.Name);
+					ListFilesToo( TreeView1->Items->Add(TN, sr.Name),  DirName+"\\" + sr.Name);
 				}
 			// List->Add(DirName+"\\" + sr.Name);//добавляет папки
 		}
@@ -93,7 +94,12 @@ void TForm3::ListFilesToo(TTreeNode* TN, const String& DirName)
 			// String Ext=ExtractFileExt(sr.Name).UpperCase();
 			// if (Ext==".JPG") //поиск по расширению
 		   //	List->Add(DirName+"\\" + sr.Name);//добавляет файлы
-        	TreeView1->Items->AddChild(TN, sr.Name);
+			if (sr.Name.Pos(too::odToFind))
+			{
+				too::listFindODpath->Add(DirName+"\\" + sr.Name);
+				too::listFindODname->Add(sr.Name);
+			}
+			TreeView1->Items->AddChild(TN, sr.Name);
 		}
 	}
 	while (!FindNext(sr));//ищем опять, пока не найдем все
@@ -139,74 +145,100 @@ void __fastcall TForm3::TreeView1MouseDown(TObject *Sender, TMouseButton Button,
 		нечет - дата
 		*/
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		Form3->Chart1->SeriesList->Clear(); //удаляет отработанные серии, очищает график
 
-		TLineSeries* ls = new TLineSeries(Form3->Chart1);
-        TLineSeries* ls2 = new TLineSeries(Form3->Chart1);
-		Form3->Chart1->AddSeries(ls);
-	   	Form3->Chart1->AddSeries(ls2);
-		StaticText1->Caption = fileName;
-		//НАИМЕНОВАНИЕ(имя файла) добавляется на форму из файла
+		if (!too::markOfManyCharts)
+		{   /*
+			проверка множественных серий
+			если нет галочки, то рисуется одна серия и
+			отмечаются всякие статик тексты
+			*/
+			Form3->Chart1->SeriesList->Clear(); //удаляет отработанные серии, очищает график
+			
+			TLineSeries* ls = new TLineSeries(Form3->Chart1);
+		   // TLineSeries* ls2 = new TLineSeries(Form3->Chart1); //НОВЫЕ СЕРИИ!!!!
+			Form3->Chart1->AddSeries(ls);
+		   //	Form3->Chart1->AddSeries(ls2);
+			StaticText1->Caption = fileName;
+			//НАИМЕНОВАНИЕ(имя файла) добавляется на форму из файла
 
-		StaticText4->Caption = listFromFileOD->Strings[0].SubString(2, listFromFileOD->Strings[0].Length() - 2);
-		//СПЕКТР (СВС)
+			StaticText4->Caption = listFromFileOD->Strings[0].SubString(2, listFromFileOD->Strings[0].Length() - 2);
+			//СПЕКТР (СВС)
 
-		StaticText2->Caption = listFromFileOD->Strings[2];
-		//ТИП ОБЪЕКТА (Муфта)
+			StaticText2->Caption = listFromFileOD->Strings[2];
+			//ТИП ОБЪЕКТА (Муфта)
 
-		if (listFromFileOD->Strings[5].Pos("."))
-		{
-			double D = StrToFloat(listFromFileOD->Strings[5]);
-			D = RoundTo(D , -1);
-			StaticText8->Caption = "fx1 = " + FloatToStr(D);//listFromFileOD->Strings[5].SubString(1, listFromFileOD->Strings[5].Pos(".")+1);
+			if (listFromFileOD->Strings[5].Pos("."))
+			{
+				double D = StrToFloat(listFromFileOD->Strings[5]);
+				D = RoundTo(D , -1);
+				StaticText8->Caption = "fx1 = " + FloatToStr(D);//listFromFileOD->Strings[5].SubString(1, listFromFileOD->Strings[5].Pos(".")+1);
+			}
+			else
+				StaticText8->Caption = "fx1 = " + listFromFileOD->Strings[5];
+			//диагностический признак fx1
+
+			if (listFromFileOD->Strings[6].Pos("."))
+			{
+				double D = StrToFloat(listFromFileOD->Strings[6]);
+				D = RoundTo(D , -1);
+				StaticText9->Caption = "fx2 = " + FloatToStr(D);//listFromFileOD->Strings[6].SubString(1, listFromFileOD->Strings[6].Pos(".")+1);
+
+			}
+			else
+				StaticText9->Caption = "fx2 = " + listFromFileOD->Strings[6];
+			//диагностический признак fx2
+
+			if (listFromFileOD->Strings[7].Pos("."))
+			{
+				double D = StrToFloat(listFromFileOD->Strings[7]);
+				D = RoundTo(D , -1);
+				StaticText10->Caption = "fx3 = " + FloatToStr(D);//listFromFileOD->Strings[7].SubString(1, listFromFileOD->Strings[7].Pos(".")+1);
+			}
+			else
+				StaticText10->Caption = "fx3 = " + listFromFileOD->Strings[7];
+			//диагностический признак fx3
+
+			StaticText6->Caption = listFromFileOD->Strings[3];
+			//уровень предупреждение
+
+			StaticText7->Caption = listFromFileOD->Strings[4];
+			//уровень авария
+
+			StaticText3->Caption = listFromFileOD->Strings[1].SubString(3, listFromFileOD->Strings[1].Length() - 2);
+			//КАНАЛ и количество линий пересчета 800/1600
+			//
+			for (int i = 8; i < listFromFileOD->Count; i++)
+			{
+				ls->AddXY(StrToDate(listFromFileOD->Strings[i+1]),StrToFloat(listFromFileOD->Strings[i]), listFromFileOD->Strings[i+1], clBlue);
+	//			ls2->AddXY(StrToDate(listFromFileOD->Strings[i+1]), 0.05*i, "test",clRed);
+	//			ls2->AddXY(StrToDate(listFromFileOD->Strings[i+1]), 0.09*i, "test",clRed);
+				i++;
+//ТУТ ТВОРИТСЯ МАГИЯ РИСОВАНИЯ НА ЧАРТЕ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+			}
+			Form3->Chart1->Title->Text->Strings[0] = "TREND";
+			ls->Title = TreeView1->GetNodeAt(X,Y)->Parent->Text + "--" + TreeView1->GetNodeAt(X,Y)->Text;
+			Form3->Chart1->View3D = false;
+			Form3->Chart1->AddSeries(ls);
+		  //	Chart1->Title->Text->Strings[0] = "";
 		}
 		else
-			StaticText8->Caption = "fx1 = " + listFromFileOD->Strings[5];
-		//диагностический признак fx1
-
-		if (listFromFileOD->Strings[6].Pos("."))
 		{
-			double D = StrToFloat(listFromFileOD->Strings[6]);
-			D = RoundTo(D , -1);
-			StaticText9->Caption = "fx2 = " + FloatToStr(D);//listFromFileOD->Strings[6].SubString(1, listFromFileOD->Strings[6].Pos(".")+1);
+//            Form3->Chart1->SeriesList->Clear();
+			TLineSeries* ls = new TLineSeries(Form3->Chart1);
+        	for (int i = 8; i < listFromFileOD->Count; i++)
+			{
 
+				ls->AddXY(StrToDate(listFromFileOD->Strings[i+1]),StrToFloat(listFromFileOD->Strings[i]), listFromFileOD->Strings[i+1], clBlue);
+	//			ls2->AddXY(StrToDate(listFromFileOD->Strings[i+1]), 0.05*i, "test",clRed);
+	//			ls2->AddXY(StrToDate(listFromFileOD->Strings[i+1]), 0.09*i, "test",clRed);
+				i++;
+				Form3->Chart1->Title->Text->Strings[0] = "TRENDS";
+				Form3->Chart1->View3D = false;
+				ls->Title = TreeView1->GetNodeAt(X,Y)->Parent->Text + "--" + TreeView1->GetNodeAt(X,Y)->Text;
+				Form3->Chart1->AddSeries(ls);
+			}
 		}
-		else
-			StaticText9->Caption = "fx2 = " + listFromFileOD->Strings[6];
-		//диагностический признак fx2
-
-		if (listFromFileOD->Strings[7].Pos("."))
-		{
-			double D = StrToFloat(listFromFileOD->Strings[7]);
-			D = RoundTo(D , -1);
-			StaticText10->Caption = "fx3 = " + FloatToStr(D);//listFromFileOD->Strings[7].SubString(1, listFromFileOD->Strings[7].Pos(".")+1);
-		}
-		else
-            StaticText10->Caption = "fx3 = " + listFromFileOD->Strings[7];
-		//диагностический признак fx3
-
-		StaticText6->Caption = listFromFileOD->Strings[3];
-		//уровень предупреждение
-
-		StaticText7->Caption = listFromFileOD->Strings[4];
-		//уровень авария
-
-		StaticText3->Caption = listFromFileOD->Strings[1].SubString(3, listFromFileOD->Strings[1].Length() - 2);
-		//КАНАЛ и количество линий пересчета 800/1600
-		//
-		for (int i = 8; i < listFromFileOD->Count; i++)
-		{
-			ls->AddXY(StrToDate(listFromFileOD->Strings[i+1]),StrToFloat(listFromFileOD->Strings[i]), listFromFileOD->Strings[i+1], clBlue);
-			ls2->AddXY(StrToDate(listFromFileOD->Strings[i+1]), 0.05*i, "test",clRed);
-			ls2->AddXY(StrToDate(listFromFileOD->Strings[i+1]), 0.09*i, "test",clRed);
-			i++;
-		}
-        Form3->Chart1->Title->Text->Strings[0] = "TREND";
-		Form3->Chart1->View3D = false;
-		Form3->Chart1->AddSeries(ls);
-	  //	Chart1->Title->Text->Strings[0] = "";
 	}
-
 	if (TreeView1->GetNodeAt(X,Y)->Text.Length() == 6)
 	{
         N1->Visible = true;
@@ -435,7 +467,7 @@ void __fastcall TForm3::N3Click(TObject *Sender)
 {    //копировать несколько ++++++++++++++++++++++
 	Form3->N1->Click(); //прогон нужен для заполнения too::listODGlobalNames
 	// тут будет выборка ОД файлов, которые отмечены галочкой в ЧекЛистБоксе
-    CheckListBox1->Clear();
+	CheckListBox1->Clear();
 	CheckListBox1->Visible = true;
 	Button4->Visible = true;
 	TTreeNode * TN;
@@ -449,27 +481,107 @@ void __fastcall TForm3::N3Click(TObject *Sender)
 
 void __fastcall TForm3::Button4Click(TObject *Sender)
 {
+
 	//тут будет корректировка списка ОД файлов
 	//обоих списков, путей и просто названий
-	CheckListBox1->Visible = false;
-	Button4->Visible = false;
-	TStringList* bufferListODpath = new TStringList();
-	TStringList* bufferListODname = new TStringList();
-	for (int i = 0; i < too::listFromFileODGlobal->Count; i++)
+	if (Button4->Caption == "Копировать") 
 	{
-		if (CheckListBox1->Checked[i])
+		
+	
+		CheckListBox1->Visible = false;
+		Button4->Visible = false;
+		TStringList* bufferListODpath = new TStringList();
+		TStringList* bufferListODname = new TStringList();
+		for (int i = 0; i < too::listFromFileODGlobal->Count; i++)
 		{
-			bufferListODpath->Add(too::listFromFileODGlobal->Strings[i]);
-			bufferListODname->Add(too::listODGlobalNames->Strings[i]);
+			if (CheckListBox1->Checked[i])
+			{
+				bufferListODpath->Add(too::listFromFileODGlobal->Strings[i]);
+				bufferListODname->Add(too::listODGlobalNames->Strings[i]);
+			}
+		}
+		if (bufferListODpath->Count)
+		{
+			too::listFromFileODGlobal = bufferListODpath;
+			too::listODGlobalNames = bufferListODname;
 		}
 	}
-	if (bufferListODpath->Count)
-	{
-		too::listFromFileODGlobal = bufferListODpath;
-		too::listODGlobalNames = bufferListODname;
+	else
+	{   //вариант со сравнением нескольких ОД файлов и построением графиков
+		Button4->Caption = "Копировать";
+        CheckListBox1->Visible = false;
+		Button4->Visible = false;
+
+		Form3->Chart1->SeriesList->Clear();
+		Form3->Chart1->Repaint();
+		TStringList* buf = new TStringList();
+		//это дело неплохо бы потом убрать в функцию
+
+		TStringList* bufferListODpath = new TStringList();
+		TStringList* bufferListODname = new TStringList();
+		for (int i = 0; i < too::listFindODpath->Count; i++)
+		{
+			if (CheckListBox1->Checked[i])
+			{
+				bufferListODpath->Add(too::listFindODpath->Strings[i]);
+				bufferListODname->Add(too::listFindODname->Strings[i]);
+			}
+		}
+		if (bufferListODpath->Count)
+		{
+			too::listFindODpath = bufferListODpath;
+			too::listFindODname = bufferListODname;
+		}
+		else
+		return;
+
+		for (int j = 0; j < too::listFindODpath->Count; j++)
+		{
+			TLineSeries* ls = new TLineSeries(Form3->Chart1);
+			buf->LoadFromFile(too::listFindODpath->Strings[j]);
+			for (int i = 8; i < buf->Count; i++)
+			{
+					
+				ls->AddXY(StrToDate(buf->Strings[i+1]),StrToFloat(buf->Strings[i]), buf->Strings[i+1], clBlue);
+	//			ls2->AddXY(StrToDate(listFromFileOD->Strings[i+1]), 0.05*i, "test",clRed);
+	//			ls2->AddXY(StrToDate(listFromFileOD->Strings[i+1]), 0.09*i, "test",clRed);
+				i++;
+				Form3->Chart1->Title->Text->Strings[0] = "TRENDS";
+				Form3->Chart1->View3D = false;
+				ls->Title = too::listFindODname->Strings[j];
+				Form3->Chart1->AddSeries(ls);
+			}
+		}
+
 	}
-	
 	// CheckListBox1->Checked[i];
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm3::CheckBox1Click(TObject *Sender)
+{
+	//
+	Form3->Chart1->SeriesList->Clear();
+	Form3->Chart1->Repaint();
+	if (CheckBox1->Checked)
+		too::markOfManyCharts = true;
+	else
+		too::markOfManyCharts = false;	
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm3::N4Click(TObject *Sender)
+{
+	too::listFindODpath = new TStringList();
+	too::listFindODname = new TStringList();
+	too::odToFind = TreeView1->GetNodeAt(x1,y1)->Text;
+	Button1->Click();
+    CheckListBox1->Clear();
+	CheckListBox1->Visible = true;
+	Button4->Visible = true;
+	Button4->Caption = "Сравнить";
+	for (int i = 0; i < too::listFindODpath->Count; i++)
+		CheckListBox1->Items->Add(too::listFindODpath->Strings[i]);
 }
 //---------------------------------------------------------------------------
 

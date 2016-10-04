@@ -7,5 +7,11 @@ namespace too
 	String mainPath;
 	moo::ParserInterface* objForMany; //  new moo::ParserInterface();
 	TStringList* listFromFileODGlobal; //список для путей к файлам ОД при множественном пересчете
-    TStringList* listODGlobalNames; //список имен ОД файлов
+	TStringList* listODGlobalNames; //список имен ОД файлов
+	bool markOfManyCharts = false;
+	String odToFind; //строка, в которой будет слово для поиска по каталогам
+						//слово - это од файл.
+	TStringList* listFindODpath;  //список путей к од файлам, найденным для сравнения
+    TStringList* listFindODname;  //соответственный список имен ОД файлов
+	bool markSearchOd = false; //
 }

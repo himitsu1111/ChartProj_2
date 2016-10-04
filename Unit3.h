@@ -51,6 +51,8 @@ __published:	// IDE-managed Components
 	TCheckListBox *CheckListBox1;
 	TMenuItem *N3;
 	TButton *Button4;
+	TCheckBox *CheckBox1;
+	TMenuItem *N4;
 	void __fastcall Button1Click(TObject *Sender);
 	void __fastcall TreeView1MouseDown(TObject *Sender, TMouseButton Button,
           TShiftState Shift, int X, int Y);
@@ -61,6 +63,8 @@ __published:	// IDE-managed Components
 	void __fastcall Button3Click(TObject *Sender);
 	void __fastcall N3Click(TObject *Sender);
 	void __fastcall Button4Click(TObject *Sender);
+	void __fastcall CheckBox1Click(TObject *Sender);
+	void __fastcall N4Click(TObject *Sender);
 private:	// User declarations
 public:		// User declarations
 	__fastcall TForm3(TComponent* Owner);

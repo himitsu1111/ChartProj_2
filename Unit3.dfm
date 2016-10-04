@@ -214,9 +214,9 @@ object Form3: TForm3
     OnClick = Button2Click
   end
   object Button3: TButton
-    Left = 3
+    Left = 0
     Top = 2
-    Width = 75
+    Width = 70
     Height = 24
     Caption = #1057#1086#1079#1076#1072#1090#1100' '#1054#1044
     TabOrder = 5
@@ -225,8 +225,8 @@ object Form3: TForm3
   object CheckListBox1: TCheckListBox
     Left = 0
     Top = 31
-    Width = 177
-    Height = 218
+    Width = 323
+    Height = 214
     ItemHeight = 13
     TabOrder = 6
     Visible = False
@@ -240,6 +240,15 @@ object Form3: TForm3
     TabOrder = 7
     Visible = False
     OnClick = Button4Click
+  end
+  object CheckBox1: TCheckBox
+    Left = 71
+    Top = 5
+    Width = 106
+    Height = 17
+    Caption = #1056#1077#1078#1080#1084' '#1089#1088#1072#1074#1085#1077#1085#1080#1103
+    TabOrder = 8
+    OnClick = CheckBox1Click
   end
   object PopupMenu1: TPopupMenu
     Left = 136
@@ -255,6 +264,10 @@ object Form3: TForm3
     object N3: TMenuItem
       Caption = #1050#1086#1087#1080#1088#1086#1074#1072#1090#1100' '#1085#1077#1089#1082#1086#1083#1100#1082#1086
       OnClick = N3Click
+    end
+    object N4: TMenuItem
+      Caption = #1057#1088#1072#1074#1085#1080#1090#1100
+      OnClick = N4Click
     end
   end
 end
