@@ -11,7 +11,9 @@ namespace too
 	bool markOfManyCharts = false;
 	String odToFind; //строка, в которой будет слово для поиска по каталогам
 						//слово - это од файл.
-	TStringList* listFindODpath;  //список путей к од файлам, найденным для сравнения
-    TStringList* listFindODname;  //соответственный список имен ОД файлов
+	TStringList* listFindODpath = new TStringList();  //список путей к од файлам, найденным для сравнения
+	TStringList* listFindODname;  //соответственный список имен ОД файлов
 	bool markSearchOd = false; //
+	TStringList* listForAnalize; //список для подсчета средних значений уровней аварии и предупреждения
+    TStringList* listForManyAnalize; //список для подсчета средних, из нескольких ОД файлов
 }

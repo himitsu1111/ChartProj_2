@@ -10,6 +10,8 @@
 #include "variables.cpp"
 #include "Math.hpp"
 
+#include "math.h"
+
 #include "ShellAPI.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
@@ -97,6 +99,7 @@ void TForm3::ListFilesToo(TTreeNode* TN, const String& DirName)
 			if (sr.Name.Pos(too::odToFind))
 			{
 				too::listFindODpath->Add(DirName+"\\" + sr.Name);
+				//тут заполняются пути к одноназванным файлам од, найденным в основной директории
 				too::listFindODname->Add(sr.Name);
 			}
 			TreeView1->Items->AddChild(TN, sr.Name);
@@ -104,6 +107,42 @@ void TForm3::ListFilesToo(TTreeNode* TN, const String& DirName)
 	}
 	while (!FindNext(sr));//ищем опять, пока не найдем все
 	FindClose(sr);
+}
+//---------------------------------------------------------------------------
+double TForm3::FindAverLvl(int b)
+{
+	double P1, P2, s, k, x, xi, n, m;
+	x = 0;
+	n = 0;
+	m = 0;
+	int count = (too::listForAnalize->Count-8)/2;
+	for (int i = 8; i < too::listForAnalize->Count; i++)
+	{
+		x = x + StrToFloat(too::listForAnalize->Strings[i]);
+		i++;
+		//находится сред. арифм.
+	}
+	x = x/count; //х посчитано!
+
+	for (int i = 8; i < too::listForAnalize->Count; i++)
+	{
+		xi = StrToFloat(too::listForAnalize->Strings[i]);
+		i++;
+		n = (xi - x);
+		m = m + n*n;
+
+		//находится сред. арифм.
+	}
+	s = sqrt(m/(count-1));
+   //	P2 = s*6;
+	P1 = s*b;
+//	StaticText6->Caption = FloatToStr(P1);
+//	StaticText7->Caption = FloatToStr(P2);
+//
+//	too::listForAnalize->LoadFromFile(too::listFindODpath->Strings[n]);
+	return P1;
+
+	
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm3::TreeView1MouseDown(TObject *Sender, TMouseButton Button,
@@ -129,6 +168,7 @@ void __fastcall TForm3::TreeView1MouseDown(TObject *Sender, TMouseButton Button,
 			pathToFile += listFromFileOD->Strings[i];
 
 		listFromFileOD->LoadFromFile(pathToFile); //строки из файла с замером
+		too::listForAnalize = listFromFileOD;
 		/*
 		Структура строк:
 		0 - спектр типа "_СВС_"
@@ -170,7 +210,7 @@ void __fastcall TForm3::TreeView1MouseDown(TObject *Sender, TMouseButton Button,
 			if (listFromFileOD->Strings[5].Pos("."))
 			{
 				double D = StrToFloat(listFromFileOD->Strings[5]);
-				D = RoundTo(D , -1);
+				D = RoundTo(D , -1); //функция для округления!!!
 				StaticText8->Caption = "fx1 = " + FloatToStr(D);//listFromFileOD->Strings[5].SubString(1, listFromFileOD->Strings[5].Pos(".")+1);
 			}
 			else
@@ -572,6 +612,7 @@ void __fastcall TForm3::CheckBox1Click(TObject *Sender)
 
 void __fastcall TForm3::N4Click(TObject *Sender)
 {
+	//кнопка СРАВНИТЬ
 	too::listFindODpath = new TStringList();
 	too::listFindODname = new TStringList();
 	too::odToFind = TreeView1->GetNodeAt(x1,y1)->Text;
@@ -584,4 +625,73 @@ void __fastcall TForm3::N4Click(TObject *Sender)
 		CheckListBox1->Items->Add(too::listFindODpath->Strings[i]);
 }
 //---------------------------------------------------------------------------
+
+void __fastcall TForm3::Button5Click(TObject *Sender)
+{
+
+	//тут должны считаться уровни аварии и предупреждения
+	//и записываться в StaticText6 и StaticText7
+   //	too::listFindODpath = new TStringList();
+	int count =	too::listFindODpath->Count;
+	if (count < 2)
+	{
+
+		StaticText6->Caption = FloatToStr(RoundTo(FindAverLvl(3), -2));  //P1
+		StaticText7->Caption = FloatToStr(RoundTo(FindAverLvl(6), -2));  //P2
+
+		Form3->Chart1BeforeDrawAxes(Sender);
+        DrawSomeLines();
+
+	}
+	else
+	{
+		double P1 = 0;
+		double P2 = 0;
+
+		for (int i = 0; i < count; i++)
+		{
+
+			too::listForAnalize->LoadFromFile(too::listFindODpath->Strings[i]);
+			P1 = P1 + FindAverLvl(3);
+			P2 = P2 + FindAverLvl(6);
+			DrawSomeLines(i);
+		}
+		P1 = P1/count;
+		P2 = P2/count;
+		StaticText6->Caption = FloatToStr(RoundTo(P1,-2));  //P1
+		StaticText7->Caption = FloatToStr(RoundTo(P2,-2));  //P2
+
+	}
+
+}
+//---------------------------------------------------------------------------
+void TForm3::DrawSomeLines(int k)
+{
+	//функция рисует линии на чарте
+	
+	TLineSeries* ls = new TLineSeries(Form3->Chart1);
+			   // TLineSeries* ls2 = new TLineSeries(Form3->Chart1); //НОВЫЕ СЕРИИ!!!!
+		//Form3->Chart1->AddSeries(ls);
+
+	for (int i = 8; i < too::listForAnalize->Count; i++)
+	{
+		ls->AddXY(StrToDate(too::listForAnalize->Strings[i+1]),StrToFloat(too::listForAnalize->Strings[i]), too::listForAnalize->Strings[i+1], clBlue);
+
+		i++;
+//ТУТ ТВОРИТСЯ МАГИЯ РИСОВАНИЯ НА ЧАРТЕ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+	}
+	Form3->Chart1->Title->Text->Strings[0] = "TREND";
+	if (k >= 0)
+		ls->Title = too::listFindODname->Strings[k];
+	else
+        ls->Title = TreeView1->GetNodeAt(x1,y1)->Parent->Text + "--" + TreeView1->GetNodeAt(x1,y1)->Text;;
+	ls->Color = clBlue;
+	Form3->Chart1->View3D = false;
+	Form3->Chart1->AddSeries(ls);
+}
+//---------------------------------------------------------------------------
+//добавить возможность изменять уровни в режиме сравнения
+//добавить возможность корректировать уровни при сохранении
+//добавить возможность сохранять уровни во всех типовых ОД файлах
+
 

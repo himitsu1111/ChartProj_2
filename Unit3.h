@@ -53,6 +53,8 @@ __published:	// IDE-managed Components
 	TButton *Button4;
 	TCheckBox *CheckBox1;
 	TMenuItem *N4;
+	TButton *Button5;
+	TButton *Button6;
 	void __fastcall Button1Click(TObject *Sender);
 	void __fastcall TreeView1MouseDown(TObject *Sender, TMouseButton Button,
           TShiftState Shift, int X, int Y);
@@ -65,10 +67,13 @@ __published:	// IDE-managed Components
 	void __fastcall Button4Click(TObject *Sender);
 	void __fastcall CheckBox1Click(TObject *Sender);
 	void __fastcall N4Click(TObject *Sender);
+	void __fastcall Button5Click(TObject *Sender);
 private:	// User declarations
 public:		// User declarations
 	__fastcall TForm3(TComponent* Owner);
 	void ListFilesToo(TTreeNode* TN, const String& DirName);
+	double FindAverLvl(int b);
+	void DrawSomeLines(int k = -1);
 };
 //---------------------------------------------------------------------------
 extern PACKAGE TForm3 *Form3;

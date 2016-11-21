@@ -80,7 +80,7 @@ object Form3: TForm3
       Left = 8
       Top = 207
       Width = 182
-      Height = 65
+      Height = 58
       Caption = #1044#1086#1087#1091#1089#1090#1080#1084#1099#1077' '#1091#1088#1086#1074#1085#1080
       TabOrder = 3
       object StaticText6: TStaticText
@@ -118,7 +118,7 @@ object Form3: TForm3
     end
     object GroupBox6: TGroupBox
       Left = 8
-      Top = 287
+      Top = 294
       Width = 182
       Height = 99
       Caption = #1044#1080#1072#1075#1085#1086#1089#1090#1080#1095#1077#1089#1082#1080#1077' '#1087#1088#1080#1079#1085#1072#1082#1080
@@ -162,6 +162,23 @@ object Form3: TForm3
         Height = 4
         TabOrder = 0
       end
+    end
+    object Button5: TButton
+      Left = 10
+      Top = 268
+      Width = 113
+      Height = 24
+      Caption = #1044#1086#1087#1091#1089#1090#1080#1084#1099#1077' '#1091#1088#1086#1074#1085#1080
+      TabOrder = 6
+      OnClick = Button5Click
+    end
+    object Button6: TButton
+      Left = 125
+      Top = 268
+      Width = 63
+      Height = 24
+      Caption = #1057#1086#1093#1088#1072#1085#1080#1090#1100
+      TabOrder = 7
     end
   end
   object TreeView1: TTreeView
@@ -226,14 +243,14 @@ object Form3: TForm3
     Left = 0
     Top = 31
     Width = 323
-    Height = 214
+    Height = 179
     ItemHeight = 13
     TabOrder = 6
     Visible = False
   end
   object Button4: TButton
-    Left = 3
-    Top = 251
+    Left = 8
+    Top = 216
     Width = 75
     Height = 21
     Caption = #1050#1086#1087#1080#1088#1086#1074#1072#1090#1100
