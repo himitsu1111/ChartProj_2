@@ -98,7 +98,7 @@ void TForm3::ListFilesToo(TTreeNode* TN, const String& DirName)
 		   //	List->Add(DirName+"\\" + sr.Name);//добавляет файлы
 			if (sr.Name.Pos(too::odToFind))
 			{
-				too::listFindODpath->Add(DirName+"\\" + sr.Name);
+				too::listFindODpath->Add(DirName + "\\" + sr.Name);
 				//тут заполняются пути к одноназванным файлам од, найденным в основной директории
 				too::listFindODname->Add(sr.Name);
 			}
@@ -107,6 +107,10 @@ void TForm3::ListFilesToo(TTreeNode* TN, const String& DirName)
 	}
 	while (!FindNext(sr));//ищем опять, пока не найдем все
 	FindClose(sr);
+	//в этой функции совершается построение дерева каталогов, но вместе с этим ещё и
+	//выбор одинаковых ОД файлов, по названиям файлов.
+	//в будущем неплохо бы разделить эти 2 задачи по разным функциям или
+	//передавать зачачи через аргументы
 }
 //---------------------------------------------------------------------------
 double TForm3::FindAverLvl(int b)
@@ -694,4 +698,33 @@ void TForm3::DrawSomeLines(int k)
 //добавить возможность корректировать уровни при сохранении
 //добавить возможность сохранять уровни во всех типовых ОД файлах
 
+
+void __fastcall TForm3::FormCreate(TObject *Sender)
+{
+	//
+	CheckListBox1->BorderStyle = bsSizeable;
+}
+//---------------------------------------------------------------------------
+
+void TForm3::ChanginODFiles(String s1, String s2)
+{
+	TStringList * tsl = new TStringList();
+	
+
+
+}
+
+//---------------------------------------------------------------------------
+
+void __fastcall TForm3::Button6Click(TObject *Sender)
+{
+	//сохранение в уровней в ОД файл
+	Edit1->Visible = true;
+	Edit2->Visible = true;
+	Edit1->Text = StaticText6->Caption;
+	Edit2->Text = StaticText7->Caption;
+	MessageBox(0, "Сохранить эти уровни?", "?", MB_YESNO);
+	
+}
+//---------------------------------------------------------------------------
 

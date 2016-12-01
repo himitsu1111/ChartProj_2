@@ -12,6 +12,7 @@ object Form3: TForm3
   Font.Style = []
   OldCreateOrder = False
   Visible = True
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object GroupBox1: TGroupBox
@@ -83,6 +84,22 @@ object Form3: TForm3
       Height = 58
       Caption = #1044#1086#1087#1091#1089#1090#1080#1084#1099#1077' '#1091#1088#1086#1074#1085#1080
       TabOrder = 3
+      object StaticText11: TStaticText
+        Left = 8
+        Top = 17
+        Width = 93
+        Height = 17
+        Caption = #1055#1088#1077#1076#1091#1087#1088#1077#1078#1076#1077#1085#1080#1077
+        TabOrder = 2
+      end
+      object StaticText12: TStaticText
+        Left = 112
+        Top = 17
+        Width = 41
+        Height = 17
+        Caption = #1040#1074#1072#1088#1080#1103
+        TabOrder = 3
+      end
       object StaticText6: TStaticText
         Left = 8
         Top = 35
@@ -99,21 +116,21 @@ object Form3: TForm3
         Caption = '0.1'
         TabOrder = 1
       end
-      object StaticText11: TStaticText
-        Left = 8
-        Top = 17
-        Width = 93
-        Height = 17
-        Caption = #1055#1088#1077#1076#1091#1087#1088#1077#1078#1076#1077#1085#1080#1077
-        TabOrder = 2
-      end
-      object StaticText12: TStaticText
+      object Edit2: TEdit
         Left = 112
-        Top = 17
-        Width = 41
-        Height = 17
-        Caption = #1040#1074#1072#1088#1080#1103
-        TabOrder = 3
+        Top = 34
+        Width = 47
+        Height = 21
+        TabOrder = 5
+        Visible = False
+      end
+      object Edit1: TEdit
+        Left = 8
+        Top = 34
+        Width = 47
+        Height = 21
+        TabOrder = 4
+        Visible = False
       end
     end
     object GroupBox6: TGroupBox
@@ -179,6 +196,7 @@ object Form3: TForm3
       Height = 24
       Caption = #1057#1086#1093#1088#1072#1085#1080#1090#1100
       TabOrder = 7
+      OnClick = Button6Click
     end
   end
   object TreeView1: TTreeView
